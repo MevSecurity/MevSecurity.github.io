@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>All Posts - MevSec Blog</title>
+        <title>All Posts - MevSec Security blog focused on Web3 security</title>
         <link>https://mevsecurity.github.io/posts/</link>
-        <description>All Posts | MevSec Blog</description>
+        <description>All Posts | MevSec Security blog focused on Web3 security</description>
         <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 30 Dec 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://mevsecurity.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>Challenge Twitter - EVM Puzzles &amp; selfdestruct</title>
     <link>https://mevsecurity.github.io/posts/twitterchallenge-puzzle-bytecode-f31ba85c800f4c42a469490f9c2378c0/</link>
