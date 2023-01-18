@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>MevSec Blog</title>
+        <title>MevSec Security blog focused on Web3 security</title>
         <link>https://mevsecurity.github.io/</link>
-        <description>MevSec Blog</description>
+        <description>MevSec Security blog focused on Web3 security</description>
         <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 30 Dec 2022 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://mevsecurity.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
