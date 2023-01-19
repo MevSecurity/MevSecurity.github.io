@@ -1,0 +1,136 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'MevSec Blog'
+theme="LoveIt"
+[params.social]
+  [params.social.youtubechannel]
+    weight = 11
+    prefix = "https://www.youtube.com/channel/"
+    title = "YouTube"
+  [params.social.twitter]
+  weight = 3
+  Prefix = "https://twitter.com/"
+  Title = "Twitter"
+  [params.social.github]
+  weight = 3
+  Prefix = "https://github.com/"
+  Title = "Github"
+
+ [params.search]
+    enable = true
+    # type of search engine ["lunr", "algolia"]
+    # 搜索引擎的类型 ["lunr", "algolia"]
+    type = "lunr"
+    # max index length of the chunked content
+    # 文章内容最长索引长度
+    contentLength = 4000
+    # placeholder of the search bar
+    # 搜索框的占位提示语
+    placeholder = ""
+    # max number of results length
+    # 最大结果数目
+    maxResultLength = 10
+    # snippet length of the result
+    # 结果内容片段长度
+    snippetLength = 30
+    # HTML tag name of the highlight part in results
+    # 搜索结果中高亮部分的 HTML 标签
+    highlightTag = "em"
+    # whether to use the absolute URL based on the baseURL in search index
+    # 是否在搜索索引中使用基于 baseURL 的绝对路径
+    absoluteURL = false
+[menu]
+  [[menu.main]]
+    weight = 1
+    identifier = "posts"
+    # you can add extra information before the name (HTML format is supported), such as icons
+    # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
+    pre = ""
+    # you can add extra information after the name (HTML format is supported), such as icons
+    # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
+    post = ""
+    name = "Posts"
+    url = "/posts/"
+    # title will be shown when you hover on this menu link
+    # 当您将鼠标悬停在此菜单链接上时, 将显示标题
+    title = ""
+  [[menu.main]]
+    weight = 2
+    identifier = "tags"
+    pre = ""
+    post = ""
+    name = "Tags"
+    url = "/tags/"
+    title = ""
+  [[menu.main]]
+    weight = 3
+    identifier = "categories"
+    pre = ""
+    post = ""
+    name = "Categories"
+    url = "/categories/"
+    title = ""
+  [params.section]
+    # special amount of posts in each section page
+    # section 页面每页显示文章数量
+    paginate = 20
+    # date format (month and day)
+    # 日期格式 (月和日)
+    dateFormat = "01-02"
+    # amount of RSS pages
+    # RSS 文章数目
+    rss = 10
+    [params.home.posts]
+      enable = true
+      # special amount of posts in each home posts page
+      # 主页每页显示文章数量
+      paginate = 6
+  # Social config in home page
+   [params.page.code]
+      # whether to show the copy button of the code block
+      # 是否显示代码块的复制按钮
+      copy = true
+      # the maximum number of lines of displayed code by default
+      # 默认展开显示的代码行数
+      maxShownLines = 500
+      [markup]
+  # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
+  # 语法高亮设置 (https://gohugo.io/content-management/syntax-highlighting)
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    lineNumbersInTable = true
+    # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
+    # false 是必要的设置 (https://github.com/dillonzq/LoveIt/issues/158)
+    noClasses = false
+  # Goldmark is from Hugo 0.60 the default library used for Markdown
+  # Goldmark 是 Hugo 0.60 以来的默认 Markdown 解析库
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      linkify = true
+      strikethrough = true
+      table = true
+      taskList = true
+      typographer = true
+    [markup.goldmark.renderer]
+      # whether to use HTML tags directly in the document
+      # 是否在文档中直接使用 HTML 标签
+      unsafe = true
+  # Table Of Contents settings
+  # 目录设置
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 6
+
+[outputs]                                                                                                                                                                                                                                     
+  home = ["HTML", "RSS", "JSON"]                                                                                                                                                                                                              
+  page = ["HTML", "MarkDown"]                                                                                                                                                                                                                 
+  section = ["HTML", "RSS"]                                                                                                                                                                                                                   
+  taxonomy = ["HTML", "RSS"]                                                                                                                                                                                                                  
+  taxonomyTerm = ["HTML"]  
+
+[params]
+title= "MevSec Blog"
