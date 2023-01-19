@@ -2,7 +2,7 @@ seURL = 'https://mevsecurity.github.io'
 languageCode = 'en-us'
 title = 'MevSec blog focused on Web3 security'
 description = "MevSec blog focused on Web3 security"
-theme="loveit"
+theme="LoveIt"
 [params.social]
   [params.social.youtubechannel]
     weight = 11
