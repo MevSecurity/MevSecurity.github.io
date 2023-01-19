@@ -1,21 +1,106 @@
-baseURL = 'http://example.org/'
+seURL = 'https://mevsecurity.github.io'
 languageCode = 'en-us'
-title = 'MevSec Blog Security blog focused on Web3 security'
-theme="LoveIt"
+title = 'MevSec blog focused on Web3 security'
+description = "MevSec blog focused on Web3 security"
+theme="loveit"
 [params.social]
   [params.social.youtubechannel]
     weight = 11
-    prefix = "https://www.youtube.com/@EthnicalSec"
+    id = "@EthnicalSec"
+    prefix = "https://www.youtube.com/"
     title = "YouTube"
+ [params.social.discord]
+    weight = 1
+    id = "7y9dyPcB96"
+    prefix = "https://discord.gg/"
+    title = "Discord Server"
   [params.social.twitter]
   weight = 3
+  id = "EthnicalInfo"
   Prefix = "https://twitter.com/"
   Title = "Twitter"
   [params.social.github]
-  weight = 3
-  Prefix = "https://github.com/Ethnical"
+  weight = 100
+  id = "Ethnical"
+  Prefix = "https://github.com/"
   Title = "Github"
+ [params.header]
+    # desktop header mode ["fixed", "normal", "auto"]
+    # 桌面端导航栏模式 ["fixed", "normal", "auto"]
+    desktopMode = "fixed"
+    # mobile header mode ["fixed", "normal", "auto"]
+    # 移动端导航栏模式 ["fixed", "normal", "auto"]
+    mobileMode = "auto"
+    # Header title config
+    # 页面头部导航栏标题配置
+    [params.header.title]
+      # URL of the LOGO
+      # LOGO 的 URL
+      logo = ""
+      # title name
+      # 标题名称
+      name = "MevSec's blog"
+      # you can add extra information before the name (HTML format is supported), such as icons
+      # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
+      pre = ""
+      # you can add extra information after the name (HTML format is supported), such as icons
+      # 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
+      post = ""
+      # whether to use typeit animation for title name
+      # 是否为标题显示打字机动画
+      typeit = false
+  [params.app]
+    # optional site title override for the app when added to an iOS home screen or Android launcher
+    # 当添加到 iOS 主屏幕或者 Android 启动器时的标题, 覆盖默认标题
+    title = "MevSec's blog"
+    # whether to omit favicon resource links
+    # 是否隐藏网站图标资源链接
+    noFavicon = false
+    # modern SVG favicon to use in place of older style .png and .ico files
+    # 更现代的 SVG 网站图标, 可替代旧的 .png 和 .ico 文件
+    svgFavicon = ""
+    # Android browser theme color
+    # Android 浏览器主题色
+    themeColor = "#ffffff"
+    # Safari mask icon color
+    # Safari 图标颜色
+    iconColor = "#5bbad5"
+    # Windows v8-11 tile color
+    # Windows v8-11 磁贴颜色
+    tileColor = "#da532c"
 
+
+ [params.home]
+    # amount of RSS pages
+    # RSS 文章数目
+    rss = 10
+    # Home page profile
+    # 主页个人信息
+    [params.home.profile]
+      enable = true
+      # Gravatar Email for preferred avatar in home page
+      # Gravatar 邮箱，用于优先在主页显示的头像
+      gravatarEmail = ""
+      # URL of avatar shown in home page
+      # 主页显示头像的 URL
+      avatarURL = ""
+      # title shown in home page (HTML format is supported)
+      # 主页显示的网站标题 (支持 HTML 格式)
+      title = ""
+      # subtitle shown in home page (HTML format is supported)
+      # 主页显示的网站副标题 (允许 HTML 格式)
+      subtitle = "MevSec a community focused on web3 security."
+      # whether to use typeit animation for subtitle
+      # 是否为副标题显示打字机动画
+      typeit = true
+      # whether to show social links
+      # 是否显示社交账号
+      social = true
+      # disclaimer (HTML format is supported)
+      # 免责声明 (支持 HTML 格式)
+      disclaimer = ""
+    # Home page posts
+    # 主页文章列表
  [params.search]
     enable = true
     # type of search engine ["lunr", "algolia"]
@@ -53,14 +138,6 @@ theme="LoveIt"
     url = "/posts/"
     # title will be shown when you hover on this menu link
     # 当您将鼠标悬停在此菜单链接上时, 将显示标题
-    title = ""
-  [[menu.main]]
-    weight = 2
-    identifier = "tags"
-    pre = ""
-    post = ""
-    name = "Tags"
-    url = "/tags/"
     title = ""
   [[menu.main]]
     weight = 3
@@ -125,12 +202,13 @@ theme="LoveIt"
     startLevel = 2
     endLevel = 6
 
-[outputs]                                                                                                                                                                                                                                     
-  home = ["HTML", "RSS", "JSON"]                                                                                                                                                                                                              
-  page = ["HTML", "MarkDown"]                                                                                                                                                                                                                 
-  section = ["HTML", "RSS"]                                                                                                                                                                                                                   
-  taxonomy = ["HTML", "RSS"]                                                                                                                                                                                                                  
-  taxonomyTerm = ["HTML"]  
+[outputs]                                                                                                              
+  home = ["HTML", "RSS", "JSON"]                                                                                       
+  page = ["HTML", "MarkDown"]                                                                                          
+  section = ["HTML", "RSS"]                                                                                            
+  taxonomy = ["HTML", "RSS"]                                                                                           
+  taxonomyTerm = ["HTML"]
 
 [params]
-title= "MevSec Blog"
+title= "MevSec Blog"%
+
