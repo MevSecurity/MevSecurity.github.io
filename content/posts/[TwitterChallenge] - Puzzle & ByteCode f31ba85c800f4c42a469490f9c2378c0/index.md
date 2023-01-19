@@ -27,6 +27,7 @@ lightgallery: true
 toc:
   auto: false
 ---
+<!--more-->
 
 ### 1. Introduction
 
