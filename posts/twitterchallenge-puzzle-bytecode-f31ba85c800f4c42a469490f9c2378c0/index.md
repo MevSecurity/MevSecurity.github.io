@@ -1,5 +1,6 @@
 # Challenge Twitter - EVM Puzzles & selfdestruct
 
+<!--more-->
 
 ### 1. Introduction
 
