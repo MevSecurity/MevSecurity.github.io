@@ -1,11 +1,11 @@
 baseURL = 'http://example.org/'
 languageCode = 'en-us'
-title = 'MevSec Blog'
+title = 'MevSec Blog Security blog focused on Web3 security'
 theme="LoveIt"
 [params.social]
   [params.social.youtubechannel]
     weight = 11
-    prefix = "https://www.youtube.com/channel/"
+    prefix = "https://www.youtube.com/@EthnicalSec"
     title = "YouTube"
   [params.social.twitter]
   weight = 3
@@ -13,7 +13,7 @@ theme="LoveIt"
   Title = "Twitter"
   [params.social.github]
   weight = 3
-  Prefix = "https://github.com/"
+  Prefix = "https://github.com/Ethnical"
   Title = "Github"
 
  [params.search]
