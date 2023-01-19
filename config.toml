@@ -1,6 +1,6 @@
 seURL = 'https://mevsecurity.github.io'
 languageCode = 'en-us'
-title = 'MevSec blog focused on Web3 security'
+title= "MevSec Blog"
 description = "MevSec blog focused on Web3 security"
 theme="LoveIt"
 [params.social]
