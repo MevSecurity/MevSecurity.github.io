@@ -19,7 +19,9 @@ authorLink: "https://twitter.com/EthnicalInfo"
 description: "Puzzle, bytecode and selfdestruct!"
 images: []
 categories: ["Web3"]
-
+resources:
+- name: "featured-image"
+  src: "Untitled.png"
 lightgallery: true
 
 toc:
