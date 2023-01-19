@@ -20,7 +20,7 @@ description: "Puzzle, bytecode and selfdestruct!"
 images: []
 categories: ["Web3"]
 resources:
-- name: "featured-image"
+- name: "featuredImagePreview"
   src: "Untitled.png"
 lightgallery: true
 
