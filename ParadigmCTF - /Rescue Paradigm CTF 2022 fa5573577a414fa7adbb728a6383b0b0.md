@@ -28,7 +28,7 @@ Here, we have 3 files here `MasterChefHelper.sol` `Setup.sol` `UniswapV2Like.sol
 
 The vulnerable contract is `MasterChefHelper.sol`  (`UniswapV2Like.sol` is useless here)
 
-First, The `Setup.sol`contract is creating the CTF, the contract is creating a vulnerable fork of a MasterChef (from Sushi). Then we can see the *whoops* comment because the admin sent **10 weth** at the wrong address (`MasterChefHelper`. So we have to steal the 10 weth from the `MasterChefHelper`.
+First, The `Setup.sol` contract is creating the CTF, the contract is creating a vulnerable fork of a MasterChef (from Sushi). Then we can see the *whoops* comment because the admin sent **10 weth** at the wrong address (`MasterChefHelper`. So we have to steal the 10 weth from the `MasterChefHelper`.
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
