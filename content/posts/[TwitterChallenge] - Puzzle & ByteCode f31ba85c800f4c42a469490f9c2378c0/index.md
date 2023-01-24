@@ -12,7 +12,7 @@
 weight: 1
 title: "Challenge Twitter - EVM Puzzles & selfdestruct"
 date: 2022-12-30
-tags: ["PoC", "EVM", "Low-level", "Reverse Engineerng", "selfdestruct"]
+tags: ["PoC", "EVM", "LOW-LEVEL", "REVERSE ENGINEERING", "SELFDESTRUCT"]
 draft: false
 author: "Ethnical"
 authorLink: "https://twitter.com/EthnicalInfo"
