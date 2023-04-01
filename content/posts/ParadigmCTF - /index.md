@@ -1,17 +1,17 @@
 ---
 weight: 1
-title: "Paradigm CTF 2022 - Rescue"
-date: 2022-12-20
-tags: ["PoC", "DeFi",, "CTF"]
+title: "Paradigm CTF - Rescue"
+date: 2022-12-30
+tags: ["CTF", "DEFI", "UNISWAP"]
 draft: false
 author: "Ethnical"
 authorLink: "https://twitter.com/EthnicalInfo"
-description: "Puzzle, bytecode and selfdestruct!"
+description: "I accidentally sent some WETH to a contract, can you help me?"
 images: []
 categories: ["Web3"]
 resources:
 - name: "featured-image-preview"
-  src: "Untitled.png"
+  src: "Paradigm.png"
 lightgallery: true
 
 toc:
@@ -20,15 +20,16 @@ toc:
 <!--more-->
 
 
-
 > I accidentally sent some WETH to a contract, can you help me?
 > 
 
 Here, we have 3 files here `MasterChefHelper.sol` `Setup.sol` `UniswapV2Like.sol` 
 
-The vulnerable contract is `MasterChefHelper.sol`  (`UniswapV2Like.sol` is useless here)
+The vulnerable contract is `MasterChefHelper.sol` (`UniswapV2Like.sol` is **useless** here).
 
-First, The `Setup.sol` contract is creating the CTF, the contract is creating a vulnerable fork of a MasterChef (from Sushi). Then we can see the *whoops* comment because the admin sent **10 weth** at the wrong address (`MasterChefHelper`. So we have to steal the 10 weth from the `MasterChefHelper`.
+First, The `Setup.sol` contract is creating the CTF, the contract is creating a vulnerable fork of a MasterChef (from Sushi). 
+
+Then we can see the *whoops* comment in the code below, because the admin sent **10 weth** at the wrong address... So we have to steal the 10 weth from the `MasterChefHelper`.
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -136,11 +137,11 @@ contract MasterChefHelper {
 }
 ```
 
-## 1 - What the contract does?
+## 1. What the contract does?
 
-### - The function `swapTokenForPoolToken`
+### The function `swapTokenForPoolToken`
 
-This is the function, we will use the steal the **10 weth** from the `MasterChefHelper`
+This is the function, we will use to the steal the **10 weth** from the `MasterChefHelper`.
 
 ```solidity
  function swapTokenForPoolToken(uint256 poolId, address tokenIn, uint256 amountIn, uint256 minAmountOut) external {
@@ -162,19 +163,19 @@ This is the function, we will use the steal the **10 weth** from the `MasterChef
     }
 ```
 
-So this function swap our **tokenIn** (for example USDC **to `token0` & `token1` o**f the Liquidity Pool given into **`poolId`**
+So this function swap our **tokenIn** (for example `USDC` **to** `token0` & `token1` of the Liquidity Pool given into `poolId`). 
 
-Then will make a LP from `token1` and `token0` and sending back to `msg.sender`
+Then will make a Liquidity Pool Token (LP) from `token1` and `token0` and sending back to `msg.sender`.
 
-This is really similar to the  `Zap` method from StellaSwap on moonbeam 😎
+This is really similar to the  `Zap` method from StellaSwap on Moonbeam 😎
 
-![Untitled](Rescue%20Paradigm%20CTF%202022%20fa5573577a414fa7adbb728a6383b0b0/Untitled.png)
+![Untitled](Untitled.png "Zap feature (from Stellaswap a DeFi Protocol).")
 
-But in our CTF,  we cannot **swap identical tokens** (for example if `tokenIn` is USDC the pool has to be something that doesn’t contain any USDC inside otherwise `_swap(tokenIn, tokenOut1, amountIn / 2);` will revert for ***`IDENTICAL SWAP TOKEN`***
+But in our CTF,  we cannot **swap identical tokens** (for example, if `tokenIn` is `USDC` the pool has to be something that doesn’t contain any USDC inside otherwise the `_swap(tokenIn, tokenOut1, amountIn / 2);` will revert with the message `IDENTICAL SWAP TOKEN`.
 
 So this pool will work DAI/WETH but USDC/WETH will revert.
 
-So now we understood that, our attack will be to trigger`_addLiquidity(tokenOut0, tokenOut1, minAmountOut);`  with `token0` DAI and `token1` WETH to get the 10 weth inside the contract. 
+So now we understood that, our attack goal will be to trigger `_addLiquidity(tokenOut0, tokenOut1, minAmountOut);`  with `token0` *DAI* and `token1` *WETH* to get the 10 *WETH* inside the contract. 
 
 ```solidity
 function _addLiquidity(
@@ -187,18 +188,19 @@ function _addLiquidity(
   }
 ```
 
-The vulnerability is here because the `MasterChefHelper` is using `ERC20Like(token1).balanceOf(address(this))` & `ERC20Like(token0).balanceOf(address(this))`
+The vulnerability is here because the `MasterChefHelper` is using `ERC20Like(token1).balanceOf(address(this))` & `ERC20Like(token0).balanceOf(address(this))`.
 
-A **check** on the `swap` return value should be implemented here! 
+> A **check** on the `swap` return value should be implemented here! 
 
 ```solidity
+//Eexplanation code
 uint256 realvalue0 = _swap(tokenIn, tokenOut0, amountIn / 2);
 uint256 realvalue1 = _swap(tokenIn, tokenOut1, amountIn / 2);
 
-//explanation code probably DO NOT USE IN PROD
+// DO NOT USE IN PROD
 (, , uint256 amountOut) = router.addLiquidity(token0, token1,
-~~ERC20Like(token0).balanceOf(address(this))~~, 
-~~ERC20Like(token1).balanceOf(address(this))~~, 0, 0, msg.sender, block.timestamp);
+ERC20Like(token0).balanceOf(address(this)), 
+ERC20Like(token1).balanceOf(address(this)), 0, 0, msg.sender, block.timestamp);
 
 // Patch version
 (, , uint256 amountOut) = router.addLiquidity(token0, token1,
@@ -207,25 +209,33 @@ realvalue1, 0, 0, msg.sender, block.timestamp);
 
 ```
 
-Using `BalanceOf(address(this))`is dangerous here because if you have enough `token0` or `token1` then the pool will be created and sent back the `msg.sender`
+Using `BalanceOf(address(this))`is dangerous here because if you have enough `token0` or `token1` then the pool will be created and sent back the `msg.sender`.
 
-Now we know that we have to swap some WETH to USDC and find a pool that doesn’t contain USDC inside but WETH is **mandatory** (as we said before we will choose **DAI/WETH**).
+Now, we know that we have to swap some *WETH* to *USDC* and find a pool that doesn’t contain *USDC* inside but *WETH* is **mandatory** (as we said before we will choose **DAI/WETH**).
 
-Perfect the pool number 2 match exactly what we need :
+Perfect! the pool number `2` match exactly what we need :
 
-![Untitled](Untitled%201.png)
+![Untitled](Untitled%201.png "Etherscan PoolInfo DAI/WETH address")
 
-If we just call the `swapTokenForPoolToken()` with some USDC it will just create a “normal” LP with USDC/2 ⇒ token0 & USDC/2 ⇒ token1.  And you cannot withdraw the 10 weth. 
+If we just call the `swapTokenForPoolToken()` with some `USDC` it will just create a “normal” LP with USDC/2 ⇒ `token0` & USDC/2 ⇒ `token1`.  And you cannot withdraw the 10 *WETH*. 
 
-But the trick here is to send more DAI to `MasterChefHelper` directly. 
+But the trick here is to send more *DAI* to `MasterChefHelper` directly. 
 
 So as we said last time `MasterChefHelper` will use `ERC20Like(token0).balanceOf(address(this))` and create a pool with the total value and sending back to you 😉
 
-Then the pool will be empty just has to flag the chall! 
+Then the pool will be empty! We then just has to flag the challenge using `netcat`! 
 
-![Untitled](Untitled%202.png)
+![Untitled](Untitled%202.png "Using netcat to get the flag!")
 
-Payload using Foundry:
+
+
+### Socials & Payload
+
+| Discord (Join us!) | Github | Twitter | 
+| ----------------------------- | ------ | ---------- | 
+| https://discord.gg/54Q9pnpQcV |  https://github.com/Ethnical/Swek3      |  https://twitter.com/EthnicalInfo |
+
+
 
 ```
 // SPDX-License-Identifier: UNLICENSED
@@ -289,3 +299,4 @@ contract ContractScript {
   fallback() external payable {}
 }
 ```
+

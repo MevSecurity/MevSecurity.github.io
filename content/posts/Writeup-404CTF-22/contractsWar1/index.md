@@ -3,7 +3,7 @@ weight: 1
 title: "Writeup 404CTF 2022 - Contracts war 1 (web3)"
 date: 2023-01-26
 tags: ["foundry", "solidity", "golang", "web3", "CTF", "404CTF"]
-draft: true
+draft: false
 author: "Nodauf"
 authorLink: "https://twitter.com/Nodauf"
 description: "Writeup of web3 challenge of 404CTF 2022 - contracts war 1/2"
@@ -11,7 +11,7 @@ images: []
 categories: ["Web3"]
 resources:
 - name: "featured-image-preview"
-  src: "404CTF.png"
+  src: "war1.png"
 lightgallery: true
 
 toc:
@@ -23,15 +23,16 @@ toc:
 
 The challenge statement is as follows:
 
-> Agent, nous avons découvert un smart contract de Hallebarde qui permet d'obtenir de l'argent gratuitement. Il sert également à s'authentifier en tant que nouveau membre de Hallebarde. Nous voulons que vous vous fassiez passer pour un de leurs membres. Nous avons récemment trouvé un endpoint qui semble leur servir de portail de connexion. Introduisez-vous dans leur système et récupérez toutes les informations sensibles que vous pourrez trouver.
+>Agent, we discovered a smart contract from Hallebarde that allows you to get free money. It is also used to authenticate as a new member of Halberd. We want you to pretend to be one of their members. We recently found an endpoint that appears to be their login portal. Break into their system and retrieve any sensitive information you can find.
 >
-> Contrat à l'adresse : 0xb8c77090221FDF55e68EA1CB5588D812fB9f77D6
+>Contract at: 0xb8c77090221FDF55e68EA1CB5588D812fB9f77D6
 >
-> Réseau de test Ropsten
+>Ropsten test network
 >
-> Auteur : Soremo
+>Author: Soremo
 >
-> nc challenge.404ctf.fr 30885
+>nc challenge.404ctf.fr 30885
+
 
 The source code of the smart contract is given:
 

@@ -3,14 +3,14 @@ weight: 1
 title: "Writeup 404CTF 2022 - Contracts war 2 (web3)"
 date: 2023-01-26
 tags: ["foundry", "solidity", "golang", "web3", "CTF", "404CTF"]
-draft: true
+draft: false
 author: "Nodauf"
 categories: ["web3"]
 authorLink: "https://twitter.com/EthnicalInfo"
 description: "Writeup of web3 challenge of 404CTF 2022 - contracts war 2/2"
 resources:
 - name: "featured-image-preview"
-  src: "404CTF.png"
+  src: "war2.png"
 lightgallery: true
 
 toc:
@@ -22,15 +22,16 @@ toc:
 
 The challenge statement is as follows:
 
-> Agent, maintenant que vous avez des compétences un peu plus approfondies en web3, nous aimerions faire appel à vos compétences dans une situation plus délicate. Nous avons décelé des traces d'activités suspectes à l'adresse 0xD5c0873f147cECF336fEEF1a28474716C745Df86. Hallebarde essaye apparemment de créer sa propre cryptomonnaie. De plus, il semble que les plus anciens membres de Hallebarde puissent récupérer une sorte de pass VIP. Utilisez ce pass pour obtenir des informations seulement connues par l'élite de Hallebarde.
+> Agent, now that you have a little more web3 expertise, we would like to call upon your skills in a more delicate situation. We have detected traces of suspicious activity at the address 0xD5c0873f147cECF336fEEF1a28474716C745Df86. Hallebarde is apparently trying to create its own cryptocurrency. Also, it seems that the oldest members of Hedgehog can get some kind of VIP pass. Use this pass to get information only known by the elite of Halberd.
 >
-> Contrat à l'adresse : 0xD5c0873f147cECF336fEEF1a28474716C745Df86
+> Contract at: 0xD5c0873f147cECF336fEEF1a28474716C745Df86
 >
-> Réseau de test Ropsten
+> Ropsten test network
 >
-> Auteur : Soremo
+> Author: Soremo
 >
 > nc challenge.404ctf.fr 30885
+
 
 The source code of the smart contract is given:
 

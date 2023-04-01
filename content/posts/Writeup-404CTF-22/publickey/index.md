@@ -3,7 +3,7 @@ weight: 1
 title: "Writeup 404CTF 2022 - public key (web3)"
 date: 2023-01-26
 tags: ["foundry", "solidity", "golang", "web3", "CTF", "404CTF"]
-draft: true
+draft: false
 author: "Nodauf"
 authorLink: "https://twitter.com/Nodauf"
 description: "Writeup of web3 challenge of 404CTF 2022 - the public key. The goal of the challenge was to retrieve the address in the storage and then find the public key of the address."
@@ -11,7 +11,7 @@ images: []
 categories: ["Web3"]
 resources:
 - name: "featured-image-preview"
-  src: "404CTF.png"
+  src: "publickey.png"
 lightgallery: true
 
 toc:
@@ -21,18 +21,19 @@ toc:
 
 ## Statement
 
-> The challenge statement is as follows:
+The challenge statement is as follows:
+> Agent, we have prepared an exercise to check your understanding of the blockchain, because the practical aspect is important but the theoretical part is just as important.
 >
-> Agent, nous vous avons préparé un exercice pour vérifier votre compréhension de la blockchain.En effet, l'aspect pratique est important mais la partie théorique l'est tout autant.Essayez de récupérer cette clé publique.
+> Contract at the address: 0x9Eb8F52b22024003C1312ea1569cf14208f3c30A
 >
-> Contrat à l'adresse : 0x9Eb8F52b22024003C1312ea1569cf14208f3c30A
+> Ropsten test network
 >
-> Réseau de test Ropsten
->
-> Attention, ce challenge utilise une blockchain de test (réseau Ropsten).
-> En AUCUN CAS vous ne devez utiliser de réelles cryptomonnaies pour ce challenge.
-> Nous ne sommes pas responsables des éventuelles pertes que vous pourriez subir si vous le faites.
-> Si vous possédez de réelles cryptomonnaies, nous vous conseillons fortement de créer un nouveau wallet séparé et dédié à ces challenges.
+> Warning, this challenge uses a test blockchain (Ropsten network).
+> Under NO circumstances should you use real cryptocurrencies for this challenge.
+> We are not responsible for any loss you might suffer if you do so.
+> If you have real cryptocurrencies, we strongly advise you to create a new wallet dedicated to these challenges.
+
+
 
 The source code of the smart contract is given:
 

@@ -33,7 +33,7 @@ toc:
 
 The _29 December 2022_ a challenge went public on [Twitter](https://twitter.com/0x796/status/1608553575969611777?s=20&t=dInafmHAmrYRQZWL2KnQug), it was the evening and what to do after a day of full of auditing solidity contract? _Eat,Sleep,Audit,Repeat?_
 
-![Untitled](Untitled.png "Tweet from <i>0x796</i> to launch the challenge")
+![Untitled](tweet.png "Tweet from <i>0x796</i> to launch the challenge")
 
 The goal of the challenge is to steal the **0.1 ETH** that are waiting on the vulnerable contract.
 
