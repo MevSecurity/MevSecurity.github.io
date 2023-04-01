@@ -1,0 +1,323 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Writeup 404CTF 2022 - public key (web3) - MevSec Blog</title><meta name=Description content="Writeup of web3 challenge of 404CTF 2022 - the public key. The goal of the challenge was to retrieve the address in the storage and then find the public key of the address."><meta property="og:title" content="Writeup 404CTF 2022 - public key (web3)"><meta property="og:description" content="Writeup of web3 challenge of 404CTF 2022 - the public key. The goal of the challenge was to retrieve the address in the storage and then find the public key of the address."><meta property="og:type" content="article"><meta property="og:url" content="/posts/writeup-404ctf-22/publickey/"><meta property="og:image" content="/posts/writeup-404ctf-22/publickey/publickey.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-26T00:00:00+00:00"><meta property="article:modified_time" content="2023-01-26T00:00:00+00:00"><meta property="og:site_name" content="MevSec Blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/posts/writeup-404ctf-22/publickey/publickey.png"><meta name=twitter:title content="Writeup 404CTF 2022 - public key (web3)"><meta name=twitter:description content="Writeup of web3 challenge of 404CTF 2022 - the public key. The goal of the challenge was to retrieve the address in the storage and then find the public key of the address."><meta name=application-name content="MevSec's blog"><meta name=apple-mobile-web-app-title content="MevSec's blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=/posts/writeup-404ctf-22/publickey/><link rel=next href=/posts/writeup-404ctf-22/contractswar2/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=/lib/fontawesome-free/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/lib/animate/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Writeup 404CTF 2022 - public key (web3)","inLanguage":"en-us","mainEntityOfPage":{"@type":"WebPage","@id":"\/posts\/writeup-404ctf-22\/publickey\/"},"image":[{"@type":"ImageObject","url":"\/posts\/writeup-404ctf-22\/publickey\/publickey.png","width":1703,"height":512}],"genre":"posts","keywords":"foundry, solidity, golang, web3, CTF, 404CTF","wordcount":1236,"url":"\/posts\/writeup-404ctf-22\/publickey\/","datePublished":"2023-01-26T00:00:00+00:00","dateModified":"2023-01-26T00:00:00+00:00","publisher":{"@type":"Organization","name":"Nodauf"},"author":{"@type":"Person","name":"Nodauf"},"description":"Writeup of web3 challenge of 404CTF 2022 - the public key. The goal of the challenge was to retrieve the address in the storage and then find the public key of the address."}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":""==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:""==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="MevSec Blog">MevSec's blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/categories/>Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="MevSec Blog">MevSec's blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Writeup 404CTF 2022 - public key (web3)</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://twitter.com/Nodauf title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>Nodauf</a></span>&nbsp;<span class=post-category>included in <a href=/categories/web3/><i class="far fa-folder fa-fw" aria-hidden=true></i>Web3</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2023-01-26>2023-01-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;1236 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;6 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#statement>Statement</a></li><li><a href=#exploitation>Exploitation</a></li></ul></nav></div></div><div class=content id=content><h2 id=statement>Statement</h2><p>The challenge statement is as follows:</p><blockquote><p>Agent, we have prepared an exercise to check your understanding of the blockchain, because the practical aspect is important but the theoretical part is just as important.</p><p>Contract at the address: 0x9Eb8F52b22024003C1312ea1569cf14208f3c30A</p><p>Ropsten test network</p><p>Warning, this challenge uses a test blockchain (Ropsten network).
+Under NO circumstances should you use real cryptocurrencies for this challenge.
+We are not responsible for any loss you might suffer if you do so.
+If you have real cryptocurrencies, we strongly advise you to create a new wallet dedicated to these challenges.</p></blockquote><p>The source code of the smart contract is given:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-solidity data-lang=solidity><span class=line><span class=cl><span class=k>pragma solidity</span> <span class=mi>0</span><span class=p>.</span><span class=mi>8</span><span class=p>.</span><span class=mi>13</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>contract</span> <span class=nc>publicKey</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kt>address</span> <span class=k>private</span> <span class=n>secretAddress</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>constructor</span><span class=p>(</span><span class=kt>address</span> <span class=n>_secretAddress</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>secretAddress</span> <span class=o>=</span> <span class=n>_secretAddress</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nf>isPublicKey</span><span class=p>(</span><span class=kt>bytes</span> <span class=k>memory</span> <span class=n>mystery</span><span class=p>)</span> <span class=k>external</span> <span class=k>view</span> <span class=k>returns</span><span class=p>(</span><span class=kt>bool</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=nb>require</span><span class=p>(</span><span class=kt>address</span><span class=p>(</span><span class=kt>uint160</span><span class=p>(</span><span class=kt>uint256</span><span class=p>(</span><span class=nb>keccak256</span><span class=p>(</span><span class=n>mystery</span><span class=p>))))</span> <span class=o>==</span> <span class=n>secretAddress</span><span class=p>,</span> <span class=s>&#34;Essayez encore !&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=exploitation>Exploitation</h2><p>The source code is short and contains one variable and one function. Before explaining the source code when need to understand how the address, public key and private key work in Solidity.</p><p>There are three steps to generate a new wallet:</p><ul><li>First, a <strong>private key</strong> is generated, it is composed of <strong>64 hexadecimal characters</strong> (i.e fad9c8855b740a0b7ed4c221dbad0f33a83a49cad6b3fe8d5817ac83d38b6a19).</li><li>Then, from the private key with the algorithm ECDSA, the <strong>public key</strong> is generated, it is composed of <strong>128 hexadecimal characters</strong> (i.e 9a7df67f79246283fdc93af76d4f8cdd62c4886e8cd870944e817dd0b97934fdd7719d0810951e03418205868a5c1b40b192451367f28e0088dd75e15de40c05). Sometimes the <strong>public key</strong> can be compressed to save memory space (<a href=https://ethereum.stackexchange.com/questions/103482/what-is-the-difference-between-compressed-and-uncompressed-public-key target=_blank rel="noopener noreffer">source</a>)</li><li>Finally, the wallet <strong>address</strong> is generated from the <strong>public key</strong>. In solidity, this can be done as follows <code>address(uint160(uint256(keccak256(publickey))))</code>. This code takes the keccak256 hash of the public key and converts it to a 160-bit number. This number is then converted to a 20-byte address. For example, the <code>keccack256</code> of the previous public key is 793d56a696967d8f0833fd6296216849c49358b10257cb55b28ea603c874b05e (<a href=https://emn178.github.io/online-tools/keccak_256.html target=_blank rel="noopener noreffer">several tools online can get the keccack256 hash</a>). The address is the last 40 characters (96216849c49358b10257cb55b28ea603c874b05e)</li></ul><p>By knowing all this, the <code>isPublicKey</code> function takes a public key as parameter, get the address from it and compare it with the <code>secretAddress</code> variable.</p><p>The exploitation can be done in two steps.</p><ol><li>Retrieving the secretAddress variable
+In solidity contract nothing is really private. Even if the visibility of the variable has been set to private, the variable is still accessible. Web3 clients has a method called <code>StorageAt</code> (or something similar depending of the language) that can be used to retrieve a hex string at a specific slot in the contract.</li></ol><p>Beforehand, I forked the blockchain for faster performance and easier debugging.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>npx hardhat node --fork https://ropsten.infura.io/v3/&lt;APIKEY&gt;
+</span></span><span class=line><span class=cl><span class=c1>#or</span>
+</span></span><span class=line><span class=cl>anvil --fork-url https://ropsten.infura.io/v3/&lt;APIKEY&gt;
+</span></span></code></pre></td></tr></table></div></div><p>The storage can be retrieved with cast from foundry:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cast storage 0x9Eb8F52b22024003C1312ea1569cf14208f3c30A <span class=m>0</span>
+</span></span><span class=line><span class=cl>0x000000000000000000000000cf9a54585b20041ac1265ad64ce21d09fd4b1324
+</span></span></code></pre></td></tr></table></div></div><p>or in golang</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;context&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;encoding/hex&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;errors&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;flag&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;log&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;math/big&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/ethereum/go-ethereum/common&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/ethereum/go-ethereum/crypto&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/ethereum/go-ethereum/ethclient&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>fork</span> <span class=kt>bool</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>blockchainURL</span><span class=p>,</span> <span class=nx>contractAddress</span> <span class=kt>string</span>
+</span></span><span class=line><span class=cl>	<span class=nx>flag</span><span class=p>.</span><span class=nf>BoolVar</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>fork</span><span class=p>,</span> <span class=s>&#34;fork&#34;</span><span class=p>,</span> <span class=kc>true</span><span class=p>,</span> <span class=s>&#34;Should we use the parameter for the fork blockchain ? (default: true)&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>flag</span><span class=p>.</span><span class=nf>Parse</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=nx>contractAddress</span> <span class=p>=</span> <span class=s>&#34;0x9Eb8F52b22024003C1312ea1569cf14208f3c30A&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>fork</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>blockchainURL</span> <span class=p>=</span> <span class=s>&#34;http://127.0.0.1:8545&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>blockchainURL</span> <span class=p>=</span> <span class=s>&#34;https://ropsten.infura.io/v3/&lt;APIKEY&gt;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=nx>client</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>ethclient</span><span class=p>.</span><span class=nf>Dial</span><span class=p>(</span><span class=nx>blockchainURL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Fatal</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// Contract
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>contractAddressHash</span> <span class=o>:=</span> <span class=nx>common</span><span class=p>.</span><span class=nf>HexToAddress</span><span class=p>(</span><span class=nx>contractAddress</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>storageContent</span><span class=p>,</span> <span class=nx>_</span> <span class=o>:=</span> <span class=nx>client</span><span class=p>.</span><span class=nf>StorageAt</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nf>Background</span><span class=p>(),</span> <span class=nx>contractAddressHash</span><span class=p>,</span> <span class=nx>common</span><span class=p>.</span><span class=nf>BigToHash</span><span class=p>(</span><span class=nx>big</span><span class=p>.</span><span class=nf>NewInt</span><span class=p>(</span><span class=mi>0</span><span class=p>)),</span> <span class=kc>nil</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;secretAddress:&#34;</span><span class=p>,</span> <span class=nx>common</span><span class=p>.</span><span class=nf>Bytes2Hex</span><span class=p>(</span><span class=nx>storageContent</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>which returns the same value. We know that the <code>secretAddress</code> is <code>0xcf9a54585b20041ac1265ad64ce21d09fd4b1324</code>.</p><ol start=2><li>An important thing about a transaction on the blockchain, is that <strong>each transaction</strong> is <strong>signed</strong> with the private key of the sender. The <strong>sender&rsquo;s public key</strong> is also included in the <strong>signature</strong>. If the node is not able to verify the signature, it will not accept the transaction. At this point, if the address <code>0xcf9a54585b20041ac1265ad64ce21d09fd4b1324</code> has sent a transaction, we will be able to retrieve its public key. Lucky we are, it has sent four transactions (<a href=https://ropsten.etherscan.io/address/0xcf9a54585b20041ac1265ad64ce21d09fd4b1324 target=_blank rel="noopener noreffer">ropsten.etherscan.io</a>).</li></ol><p>We need to recover the raw transaction that has been send by <code>0xcf9a54585b20041ac1265ad64ce21d09fd4b1324</code>. For some unknown reason etherscan can&rsquo;t <a href="https://ropsten.etherscan.io/getRawTx?tx=0x0a9a1a08bd3beda768824b667573436893912c97931ce18b240ed478216f458d" target=_blank rel="noopener noreffer">retrieve the raw transaction</a>.</p><p>But we can do it with any language with a web3 module.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=o>...</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// Get the raw transaction in hex
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>txHash</span> <span class=o>:=</span> <span class=nx>common</span><span class=p>.</span><span class=nf>HexToHash</span><span class=p>(</span><span class=s>&#34;0x3e641c314c4ffdfedad05dcee63910aa846711730b0c7366feb635b2e16b5cdb&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>tx</span><span class=p>,</span> <span class=nx>_</span><span class=p>,</span> <span class=nx>_</span> <span class=o>:=</span> <span class=nx>client</span><span class=p>.</span><span class=nf>TransactionByHash</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nf>Background</span><span class=p>(),</span> <span class=nx>txHash</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>rawTXBytes</span><span class=p>,</span> <span class=nx>_</span> <span class=o>:=</span> <span class=nx>tx</span><span class=p>.</span><span class=nf>MarshalBinary</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Raw data =&gt;&#34;</span><span class=p>,</span> <span class=nx>common</span><span class=p>.</span><span class=nf>Bytes2Hex</span><span class=p>(</span><span class=nx>rawTXBytes</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=o>...</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Raw data =&gt; f89702850ba43b7400831e84809465b38460c75a116f2b20f7bad96d2f1847db576288016345785d8a0000aa426f6e6e65206368616e636520706f75722074726f75766572206d6120636cc3a9207075626c697175651ba07f1e563c8c68bc5ef8e8556ef50d3d60159542a155f31602f0672b3f2b46a4a3a05c99f08fee4db681b60e0647a94fd9ae016476397d56b6c4d9afcc77615bb1e4
+</span></span></code></pre></td></tr></table></div></div><p><a href=https://toolkit.abdk.consulting/ethereum#rlp,recover-address target=_blank rel="noopener noreffer">An online tool</a> can do the math for us to retrieve the public key from the transaction.</p><p><figure><a class=lightgallery href=/posts/writeup-404ctf-22/publickey/toolkit.abdk.consulting.png title="Retrieve the public key with an online tool" data-thumbnail=/posts/writeup-404ctf-22/publickey/toolkit.abdk.consulting.png data-sub-html="<h2>Retrieve the public key with an online tool</h2><p>Retrieve the public key with an online tool</p>"><img class=lazyload src=/svg/loading.min.svg data-src=/posts/writeup-404ctf-22/publickey/toolkit.abdk.consulting.png data-srcset="/posts/writeup-404ctf-22/publickey/toolkit.abdk.consulting.png, /posts/writeup-404ctf-22/publickey/toolkit.abdk.consulting.png 1.5x, /posts/writeup-404ctf-22/publickey/toolkit.abdk.consulting.png 2x" data-sizes=auto alt=/posts/writeup-404ctf-22/publickey/toolkit.abdk.consulting.png width=1457 height=741></a><figcaption class=image-caption>Retrieve the public key with an online tool</figcaption></figure></p><p>In golang, no public function is available to recover the public key of a transaction. However, a private function in <a href=https://github.com/ethereum/go-ethereum/blob/4b309c70065e68321f6ba518f35b0454a5c929a9/core/types/transaction_signing.go#L482 target=_blank rel="noopener noreffer">transaction_signing</a> named <code>recoverPlain</code> return, from the raw transaction, the address of the sender after calculating the public key (I leave as an exercice for the reader to see how the internal works. The first called function is <a href=https://github.com/ethereum/go-ethereum/blob/4b309c70065e68321f6ba518f35b0454a5c929a9/core/types/transaction_signing.go#L184 target=_blank rel="noopener noreffer">Sender of the london signer type</a>)</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;context&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;errors&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;flag&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;log&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;math/big&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/ethereum/go-ethereum/common&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/ethereum/go-ethereum/core/types&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/ethereum/go-ethereum/crypto&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/ethereum/go-ethereum/ethclient&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>fork</span> <span class=kt>bool</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>blockchainURL</span><span class=p>,</span> <span class=nx>contractAddress</span> <span class=kt>string</span>
+</span></span><span class=line><span class=cl>	<span class=nx>flag</span><span class=p>.</span><span class=nf>BoolVar</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>fork</span><span class=p>,</span> <span class=s>&#34;fork&#34;</span><span class=p>,</span> <span class=kc>true</span><span class=p>,</span> <span class=s>&#34;Should we use the parameter for the fork blockchain ? (default: true)&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>flag</span><span class=p>.</span><span class=nf>Parse</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=nx>contractAddress</span> <span class=p>=</span> <span class=s>&#34;0x9Eb8F52b22024003C1312ea1569cf14208f3c30A&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>fork</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>blockchainURL</span> <span class=p>=</span> <span class=s>&#34;http://127.0.0.1:8545&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>blockchainURL</span> <span class=p>=</span> <span class=s>&#34;https://ropsten.infura.io/v3/&lt;APIKEY&gt;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=nx>client</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>ethclient</span><span class=p>.</span><span class=nf>Dial</span><span class=p>(</span><span class=nx>blockchainURL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Fatal</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// Contract
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>contractAddressHash</span> <span class=o>:=</span> <span class=nx>common</span><span class=p>.</span><span class=nf>HexToAddress</span><span class=p>(</span><span class=nx>contractAddress</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>storageContent</span><span class=p>,</span> <span class=nx>_</span> <span class=o>:=</span> <span class=nx>client</span><span class=p>.</span><span class=nf>StorageAt</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nf>Background</span><span class=p>(),</span> <span class=nx>contractAddressHash</span><span class=p>,</span> <span class=nx>common</span><span class=p>.</span><span class=nf>BigToHash</span><span class=p>(</span><span class=nx>big</span><span class=p>.</span><span class=nf>NewInt</span><span class=p>(</span><span class=mi>0</span><span class=p>)),</span> <span class=kc>nil</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;secretAddress:&#34;</span><span class=p>,</span> <span class=nx>common</span><span class=p>.</span><span class=nf>Bytes2Hex</span><span class=p>(</span><span class=nx>storageContent</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// Get the raw transaction in hex
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>txHash</span> <span class=o>:=</span> <span class=nx>common</span><span class=p>.</span><span class=nf>HexToHash</span><span class=p>(</span><span class=s>&#34;0x3e641c314c4ffdfedad05dcee63910aa846711730b0c7366feb635b2e16b5cdb&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>tx</span><span class=p>,</span> <span class=nx>_</span><span class=p>,</span> <span class=nx>_</span> <span class=o>:=</span> <span class=nx>client</span><span class=p>.</span><span class=nf>TransactionByHash</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nf>Background</span><span class=p>(),</span> <span class=nx>txHash</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>rawTXBytes</span><span class=p>,</span> <span class=nx>_</span> <span class=o>:=</span> <span class=nx>tx</span><span class=p>.</span><span class=nf>MarshalBinary</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Raw data =&gt;&#34;</span><span class=p>,</span> <span class=nx>common</span><span class=p>.</span><span class=nf>Bytes2Hex</span><span class=p>(</span><span class=nx>rawTXBytes</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>	<span class=nx>v</span><span class=p>,</span> <span class=nx>r</span><span class=p>,</span> <span class=nx>s</span> <span class=o>:=</span> <span class=nx>tx</span><span class=p>.</span><span class=nf>RawSignatureValues</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=c1>//fmt.Println(recoverPlain(a.Hash(), r, s, v, true))
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=kd>var</span> <span class=nx>z</span> <span class=nx>types</span><span class=p>.</span><span class=nx>FrontierSigner</span>
+</span></span><span class=line><span class=cl>	<span class=nx>calculatedSenderAddress</span><span class=p>,</span> <span class=nx>_</span> <span class=o>:=</span> <span class=nf>recoverPlain</span><span class=p>(</span><span class=nx>z</span><span class=p>.</span><span class=nf>Hash</span><span class=p>(</span><span class=nx>tx</span><span class=p>),</span> <span class=nx>r</span><span class=p>,</span> <span class=nx>s</span><span class=p>,</span> <span class=nx>v</span><span class=p>,</span> <span class=kc>true</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Calculated sender address =&gt;&#34;</span><span class=p>,</span> <span class=nx>calculatedSenderAddress</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// recoverPlain attempts to recover the public key from the signature.
+</span></span></span><span class=line><span class=cl><span class=c1>// From https://github.com/ethereum/go-ethereum/blob/4b309c70065e68321f6ba518f35b0454a5c929a9/core/types/transaction_signing.go#L482
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=nf>recoverPlain</span><span class=p>(</span><span class=nx>sighash</span> <span class=nx>common</span><span class=p>.</span><span class=nx>Hash</span><span class=p>,</span> <span class=nx>R</span><span class=p>,</span> <span class=nx>S</span><span class=p>,</span> <span class=nx>Vb</span> <span class=o>*</span><span class=nx>big</span><span class=p>.</span><span class=nx>Int</span><span class=p>,</span> <span class=nx>homestead</span> <span class=kt>bool</span><span class=p>)</span> <span class=p>(</span><span class=nx>common</span><span class=p>.</span><span class=nx>Address</span><span class=p>,</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>Vb</span><span class=p>.</span><span class=nf>BitLen</span><span class=p>()</span> <span class=p>&gt;</span> <span class=mi>8</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>common</span><span class=p>.</span><span class=nx>Address</span><span class=p>{},</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;Invalid Sig&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>V</span> <span class=o>:=</span> <span class=nb>byte</span><span class=p>(</span><span class=nx>Vb</span><span class=p>.</span><span class=nf>Uint64</span><span class=p>()</span> <span class=o>-</span> <span class=mi>27</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>!</span><span class=nx>crypto</span><span class=p>.</span><span class=nf>ValidateSignatureValues</span><span class=p>(</span><span class=nx>V</span><span class=p>,</span> <span class=nx>R</span><span class=p>,</span> <span class=nx>S</span><span class=p>,</span> <span class=nx>homestead</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>common</span><span class=p>.</span><span class=nx>Address</span><span class=p>{},</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;Invalid Sig&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// encode the signature in uncompressed format
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>r</span><span class=p>,</span> <span class=nx>s</span> <span class=o>:=</span> <span class=nx>R</span><span class=p>.</span><span class=nf>Bytes</span><span class=p>(),</span> <span class=nx>S</span><span class=p>.</span><span class=nf>Bytes</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=nx>sig</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>([]</span><span class=kt>byte</span><span class=p>,</span> <span class=nx>crypto</span><span class=p>.</span><span class=nx>SignatureLength</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nb>copy</span><span class=p>(</span><span class=nx>sig</span><span class=p>[</span><span class=mi>32</span><span class=o>-</span><span class=nb>len</span><span class=p>(</span><span class=nx>r</span><span class=p>):</span><span class=mi>32</span><span class=p>],</span> <span class=nx>r</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nb>copy</span><span class=p>(</span><span class=nx>sig</span><span class=p>[</span><span class=mi>64</span><span class=o>-</span><span class=nb>len</span><span class=p>(</span><span class=nx>s</span><span class=p>):</span><span class=mi>64</span><span class=p>],</span> <span class=nx>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>sig</span><span class=p>[</span><span class=mi>64</span><span class=p>]</span> <span class=p>=</span> <span class=nx>V</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// recover the public key from the signature
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>pub</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>crypto</span><span class=p>.</span><span class=nf>Ecrecover</span><span class=p>(</span><span class=nx>sighash</span><span class=p>[:],</span> <span class=nx>sig</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Recovered public key =&gt;&#34;</span><span class=p>,</span> <span class=nx>common</span><span class=p>.</span><span class=nf>Bytes2Hex</span><span class=p>(</span><span class=nx>pub</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>common</span><span class=p>.</span><span class=nx>Address</span><span class=p>{},</span> <span class=nx>err</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=nx>pub</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span> <span class=o>||</span> <span class=nx>pub</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>!=</span> <span class=mi>4</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>common</span><span class=p>.</span><span class=nx>Address</span><span class=p>{},</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;invalid public key&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>addr</span> <span class=nx>common</span><span class=p>.</span><span class=nx>Address</span>
+</span></span><span class=line><span class=cl>	<span class=nb>copy</span><span class=p>(</span><span class=nx>addr</span><span class=p>[:],</span> <span class=nx>crypto</span><span class=p>.</span><span class=nf>Keccak256</span><span class=p>(</span><span class=nx>pub</span><span class=p>[</span><span class=mi>1</span><span class=p>:])[</span><span class=mi>12</span><span class=p>:])</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>addr</span><span class=p>,</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>...
+</span></span><span class=line><span class=cl>Recovered public key =&gt; 040313073748ea0af8e0782adae7c15f2bd46b5179dab5a200307a41868b9dade1fd7eebc17da98c8d2065e429b1fd05e7651e08bda5b279254530f5b00f4487f2
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Calculated sender address =&gt; 0xcF9A54585b20041aC1265Ad64cE21d09fD4b1324
+</span></span></code></pre></td></tr></table></div></div><p>You can notice, that to convert the public key to an address, the first bytes (two characters) are ignored. This is because the <code>04</code> is a tag bytes for the ASN.1 OCTET String structure.</p><p>We can check the public key by sending it the contract with the <code>cast</code> command of the foundry binaries.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cast send 0x9Eb8F52b22024003C1312ea1569cf14208f3c30A <span class=s2>&#34;isPublicKey(bytes)&#34;</span> <span class=s2>&#34;0313073748ea0af8e0782adae7c15f2bd46b5179dab5a200307a41868b9dade1fd7eebc17da98c8d2065e429b1fd05e7651e08bda5b279254530f5b00f4487f2&#34;</span> --rpc-url http://localhost:8545  --private-key 0x.....
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2023-01-26</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/foundry/>foundry</a>,&nbsp;<a href=/tags/solidity/>solidity</a>,&nbsp;<a href=/tags/golang/>golang</a>,&nbsp;<a href=/tags/web3/>web3</a>,&nbsp;<a href=/tags/ctf/>CTF</a>,&nbsp;<a href=/tags/404ctf/>404CTF</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/writeup-404ctf-22/contractswar2/ class=next rel=next title="Writeup 404CTF 2022 - Contracts war 2 (web3)">Writeup 404CTF 2022 - Contracts war 2 (web3)<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank></a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/lightgallery/css/lightgallery-bundle.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:500},comment:{},lightgallery:!0,search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
