@@ -1,11 +1,11 @@
 ---
 weight: 1
 title: "MevSec writeup Introduction"
-date: 2023-01-26
-tags: ["foundry", "solidity", "golang", "web3", "CTF", "404CTF"]
+date: 2023-04-01
+tags: ["Foundry", "MevSec", "Cast", "Web3"]
 draft: false
 author: "Ethnical"
-authorLink: "https://twitter.com/Nodauf"
+authorLink: "https://twitter.com/EthnicalInfo"
 description: "Writeup on the first challenge of MevSec."
 images: []
 categories: ["Web3"]
@@ -23,7 +23,7 @@ toc:
 
 MevSec is a community focused on web3 security. To ensure the people has the require knowledge and permits to have a healthy community, we decided to create a CTF (Capture the Flag). The goal is to flag the challenges on the [ctf.mevsec.com](https://ctf.mevsec.com) to have at least 300 points. Once you get the <u>300</u> score points, you can join the community 😎  
 
-Today, we will solve the first challenge together to show you how it works.
+Today, we will solve the first challenge together to show you how it works 🎉
 
 The challenge statement is as follows:
 
