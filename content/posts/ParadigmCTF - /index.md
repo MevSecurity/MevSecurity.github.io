@@ -1,7 +1,7 @@
 ---
 weight: 1
 title: "Paradigm CTF - Rescue"
-date: 2022-12-30
+date: 2022-12-01
 tags: ["CTF", "DEFI", "UNISWAP"]
 draft: false
 author: "Ethnical"

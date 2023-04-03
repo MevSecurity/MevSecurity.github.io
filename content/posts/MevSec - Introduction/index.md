@@ -73,7 +73,7 @@ The setup will create the challenge by creating the contract  `VideoChallengeInt
 vci = (new VideoChallengeIntro){ value: 100 ether }(); //In this Challenge, 100 ether has been sent to the contract.
 ```
 
-If we are looking closely the function `isSolved()` This function will return `true` , if the balance of the challenge is set to $**0**$.
+If we are looking closely the function `isSolved()` This function will return `true` , if the balance of the challenge is set to **0**.
 
 > We can directly see that the goal of the challenge is to empty the balance of contract `VCI`.
 > 
