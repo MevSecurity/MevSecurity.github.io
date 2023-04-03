@@ -351,7 +351,7 @@ So this the final steps to produce the attack and kill this dragon:
 
 Voilaaaa! What a nice challenge from 0xKasper didn’t have the time to dive into the CTF… But this will obviously give some new idea of challenges for [ctf.mevsec.com](https://ctf.mevsec.com//)
 
-### 6. Socials & Payload
+## Socials & Payload
 
 | Discord (Join us!) | Github | Twitter | 
 | ----------------------------- | ------ | ---------- | 
