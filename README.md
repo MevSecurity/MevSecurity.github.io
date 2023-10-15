@@ -18,3 +18,8 @@ hugo server --buildDrafts
 ```
 
 Then you can use this command to run the server **LOCALLY** and perform some checks before pushing to the Github.
+
+
+The server will run in localhost and you can perform the check if the article is correct like this: 
+
+![CleanShot 2023-10-15 at 19 47 28](https://github.com/MevSecurity/MevSecurity.github.io/assets/23560242/b18a8e3a-f6e1-40a7-a62a-e582303fe743)
