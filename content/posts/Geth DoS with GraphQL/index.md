@@ -4,14 +4,11 @@ title: "CVE-2023-42319 : Geth - DoS through GraphQL"
 date: 2023-10-15
 tags: ["Geth", "DoS","GraphQL"]
 draft: true
-author: "Fadam"
-authorLink: "https://twitter.com/EthnicalInfo"
+author: "fadam"
+authorLink: ""
 description: "CVE-2023-42319 : Geth - Denial Of Service through the GraphQL endpoint"
 images: []
 categories: ["Web2"]
-resources:
-  - name: "featured-image-preview"
-    src: "Paradigm.png"
 lightgallery: true
 
 toc:
@@ -27,10 +24,10 @@ toc:
 
 GraphQL is a query language for APIs, commonly seen in Web2 applications querying the blockchain.
 
-**Geth** proposes a GraphQL endpoint that can be activated by adding the option **--http --graphql** at start of the service.
+**Geth** proposes a GraphQL endpoint that can be activated by adding the option **--http --graphql** when starting the service.
 
 However, this component is buggy and subject to Denial Of Service because:
-* It consumes a lot of resources
+* It consumes a lot of resources,
 * It is possible to perform unlimited GraphQL requests within a single HTTP request
 
 The present research was conducted in during the month of June/July 2023, with the issue being sent to Geth team on July 4th 2023.
@@ -89,7 +86,7 @@ The result of such a request is that the server will **treat each GraphQL query 
 
 ![Batch result](4-http-batch-result.png "image_tooltip")
 
-This means that someone can ask the server to perform hundreds, even thousands of GraphQL operations, **within a single HTTP request**, which can lead to resource exhaustion, therefore causing a **Denial Of Service**.
+This means that someone can ask the server to perform hundreds, even thousands of GraphQL operations **within a single HTTP request**, which can lead to resource exhaustion, therefore causing a **Denial Of Service**.
 
 ## Exploitation
 
@@ -102,9 +99,9 @@ This request returns a large JSON, that can be uploaded on a website like [Graph
 
 ![inQL Burp extension](5-inQL.png "image_tooltip")
 
-<u>Note:</u> since Geth is public, it is also possible to retrieve this information from the source [code](https://github.com/ethereum/go-ethereum/blob/master/graphql/schema.go).
+<u>Note:</u> since Geth is public, it is also possible to retrieve this information from the [source code](https://github.com/ethereum/go-ethereum/blob/master/graphql/schema.go).
 
-By analyzing the results, the **logs.query** from **Geth** is interesting because the filter **fromBlock** means that the server would have to recompute, for each GraphQL query, all the logs from the mentioned block. This **seems expensive in terms of resources**. Using aliases for this query would look like this :
+By analyzing the results, the **logs** query is interesting because the filter **fromBlock** means that the server would have to recompute, for each GraphQL query, all the logs from the mentioned block. This **seems expensive in terms of resources**. Using aliases for this query would look like this :
 ```code
 query {
     request1: logs(filter: { fromBlock: 4188901 }) {
@@ -177,7 +174,7 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-This will generate a payload.json file that can be sent through the GraphQLinterface : 
+This will generate a payload.json file that can be sent through the GraphQL interface : 
 
 ![Exploitation with GraphiQL](6-geth-graphiql.png "image_tooltip")
 
@@ -215,7 +212,7 @@ query {
 }
 ```
 
-This single HTTP request is performing **only 2 GraphQL requests **with aliases.
+This single HTTP request is performing **only 2 GraphQL requests** with aliases.
 
 When the request is fired, you can see:
 1. At 00:40, the RAM memory went up to 9,4Gb of RAM (+8.3Gb for 2 GraphQL requests)
@@ -322,7 +319,7 @@ After discussing with the team, they have decided to update the Security page of
 
 ![Ethereum response](8-eth-response.png "image_tooltip")
 
-Since September 5th, the Geth [webpage](https://geth.ethereum.org/docs/fundamentals/security) was updated.A special part regarding API Security was added, mentioning GraphQL :
+Since September 5th, the Geth [webpage](https://geth.ethereum.org/docs/fundamentals/security) was updated. A special part regarding API Security was added, mentioning GraphQL among other topics :
 
 <p align="center">
 <img alt="Updated Security page" src="9-geth-new-security.png"  width=80% height=80%>
