@@ -10,6 +10,9 @@ description: "CVE-2023-42319 : Geth - Denial Of Service through the GraphQL endp
 images: []
 categories: ["Web2"]
 lightgallery: true
+resources:
+  - name: "featured-image-preview"
+    src: "templatebloggraphqldos.png"
 
 toc:
   auto: false
