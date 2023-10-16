@@ -72,7 +72,7 @@ query{
 
 The result of such a request is that the server will **treat each GraphQL query individually**, and return them within the same HTTP response.
 
-![Batch result](4-http-batch-result.png "image_tooltip")
+![Batch result](4-http-batch-result.png "Batch Result From the GraphQL console")
 
 This means that someone can ask the server to perform hundreds, even thousands of GraphQL operations **within a single HTTP request**, which can lead to resource exhaustion, therefore causing a **Denial Of Service**.
 
@@ -86,7 +86,7 @@ When the GraphQL service is enabled on Geth, it is possible to retrieve all the 
 
 This request returns a large JSON, that can be uploaded on a website like [GraphQL Voyager](https://graphql-kit.com/graphql-voyager/), or simply put in the **InQL Scanner** module for analysis:
 
-![inQL Burp extension](5-inQL.png "image_tooltip")
+![inQL Burp extension](5-inQL.png "BurpSuite InQL Scanner")
 
 <u>Note:</u> since Geth is public, it is also possible to retrieve this information from the [source code](https://github.com/ethereum/go-ethereum/blob/master/graphql/schema.go).
 
@@ -308,13 +308,13 @@ Because the GraphQL feature is an option, it is out of scope of the Ethereum Bug
 
 This seems to be tied to the fact that they consider that [RPC port should be blocked in terms of Firewalling](https://geth.ethereum.org/docs/fundamentals/security).
 
-![Old Security page](7-geth-security-old.png "Firewall Security")
+![Old Security page](7-geth-security-old.png "Firewall Disclamer From Ethereum Fondation")
 
 This however does not eliminate the issue and it is not difficult to find and exploit vulnerable servers in the wild.
 
 After discussing with the team, they have decided to update the Security page of Geth to warn users about exposing the GraphQL endpoint :
 
-![Ethereum response](8-eth-response.png "Mail from Ethereum")
+![Ethereum response](8-eth-response.png "Mail from Ethereum Fondation")
 
 Since September 5th, the Geth [webpage](https://geth.ethereum.org/docs/fundamentals/security) was updated. A special part regarding API Security was added, mentioning GraphQL among other topics :
 
