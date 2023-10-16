@@ -1,6 +1,6 @@
 seURL = 'https://mevsecurity.github.io'
 languageCode = 'en-us'
-title= "MevSec Blog"
+title= "MevSec"
 description = "MevSec blog focused on Web3 security"
 theme="LoveIt"
 [params.social]
@@ -39,7 +39,7 @@ theme="LoveIt"
       logo = ""
       # title name
       # 标题名称
-      name = "MevSec's blog"
+      name = "MevSec"
       # you can add extra information before the name (HTML format is supported), such as icons
       # 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
       pre = ""
