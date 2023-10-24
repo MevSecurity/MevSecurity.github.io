@@ -308,13 +308,13 @@ Because the GraphQL feature is an option, it is out of scope of the Ethereum Bug
 
 This seems to be tied to the fact that they consider that [RPC port should be blocked in terms of Firewalling](https://geth.ethereum.org/docs/fundamentals/security).
 
-![Old Security page](7-geth-security-old.png "Firewall Disclamer From Ethereum Fondation")
+![Old Security page](7-geth-security-old.png "Firewall Disclamer From Ethereum Foundation")
 
 This however does not eliminate the issue and it is not difficult to find and exploit vulnerable servers in the wild.
 
 After discussing with the team, they have decided to update the Security page of Geth to warn users about exposing the GraphQL endpoint :
 
-![Ethereum response](8-eth-response.png "Mail from Ethereum Fondation")
+![Ethereum response](8-eth-response.png "Mail from Ethereum Foundation")
 
 Since September 5th, the Geth [webpage](https://geth.ethereum.org/docs/fundamentals/security) was updated. A special part regarding API Security was added, mentioning GraphQL among other topics :
 
