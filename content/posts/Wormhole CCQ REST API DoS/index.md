@@ -64,7 +64,7 @@ minikube start --cpus=8 --memory=24G --disk-size=100G --driver=docker
 tilt up
 ```
 
-Then we need to modify the Tilt file so we can access the CCQ feature, please refer to the following [Tilt file](https://gist.github.com/0xfadam/4ba10f032d3d2530f5f28556285248a6à)
+Then we need to modify the Tilt file so we can access the CCQ feature, please refer to the following [Tilt file](https://gist.github.com/0xfadam/4ba10f032d3d2530f5f28556285248a6)
 
 To create the 1 Gb payload that will crash the service :
 ```bash
