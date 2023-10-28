@@ -30,7 +30,7 @@ The tests were performed on the commit: [6c3ff43d6a416abce680e77ce81a9f613ba2707
 Wormhole has implemented a new feature: [Cross-Chain Queries](https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0013_ccq.md) which includes a REST API :
 > a separate REST server is being provided to accept off-chain query requests
 
-Also the feature is only supposed to work off-chain (p2p, API) in a first time :
+Also the feature is designed to work off-chain only (p2p, API) in the initial deployment:
 > The initial release of CCQ will not support on chain requests.
 
 There are two issues regarding the REST API.
@@ -89,12 +89,6 @@ On the second video, at 5.22, the server reaches maximum RAM and container resta
 
 Only 2/3 requests were used. The purpose of using a small amount of requests was to demonstrate that the issue was not **network-related** , but **application-related**.
 
-I believed this issue could have been critical if 6+ guardians expose the endpoint, since this would lead to a "Permanent Denial of Service attacks (excluding volumetric attacks)". \
-Indeed, it is important to note that Guardians are also [expected to run full nodes](https://docs.wormhole.com/wormhole/explore-wormhole/guardian) : 
-> The requirements for running a Guardian are relatively heavy, as they need to run a full node for every single blockchain in the ecosystem. 
-
-Causing such a RAM incident would have other repercussions on other services (for instance, if geth for unexpected reasons, it can takes hours/days to resync properly).
-
 ## Recommendation
 1. The first part of the fix is to check the authentication before processing the JSON payload.
 ```golang
@@ -117,10 +111,10 @@ const MAX_BODY_SIZE = 5 * 1024 * 1024
 err := json.NewDecoder(http.MaxBytesReader(w, r.Body, MAX_BODY_SIZE)).Decode(&q)
 ```
 ## Wormhole response
-The issue was not considred critical for the following reasons:
-1. CCQ will run separately from the guardian (another service),
-2. CCQ product, even if pushed in Main branch, was not pushed onto the guardians,
-3. It is expected that guardian operators will protect the CCQ feature behind a reverse-proxy and other security equipments.
+CCQ service exists outside of the Guardians, on different servers. \
+This is by design to ensure minimal running services are on the node that contains the guardian signing and identity (p2p) keys. \
+Therefore, impacting CCQ could have not caused a Denial of Service on the Guardians. \
+Also, it is expected that Guardians operators will protect the CCQ feature behind a reverse-proxy and other security equipments.
 
 With that being said, Wormhole has been very proactive and has fixed the issue **on the same day** of the report, through the [PR 3443](https://github.com/wormhole-foundation/wormhole/pull/3443).
 
