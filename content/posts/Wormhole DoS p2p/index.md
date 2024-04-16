@@ -258,7 +258,7 @@ Here are some videos PoC with 4 Guardians, and the attack started from a Spy:
 
 ### Conclusion
 The issue was fixed in [PR3873](https://github.com/wormhole-foundation/wormhole/pull/3873).
-When receiving a *Heartbeat*, the code now ensures that the **PeerId** of the p2p message matches the p2p of the Guardian who generated the *Heartbeat*.
+When receiving a *Heartbeat*, the code now ensures that the **PeerId** of the p2p message matches the **PeerId** of the Guardian who generated the *Heartbeat*.
 ```golang
 	// Don't accept replayed heartbeats from other peers
 	signedPeer, err := peer.IDFromBytes(h.P2PNodeId)
