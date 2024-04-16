@@ -12,7 +12,7 @@ categories: ["Web2"]
 lightgallery: true
 resources:
   - name: "featured-image-preview"
-    src: "templatewormhole.png"
+    src: "wormholep2p.png"
 
 toc:
   auto: false
