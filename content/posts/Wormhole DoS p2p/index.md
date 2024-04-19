@@ -1,6 +1,6 @@
 ---
 weight: 1
-title: "Second-Order DoS in Wormhole p2p"
+title: "Taking down Wormhole's Guardian Network"
 date: 2024-04-16
 tags: ["Wormhole", "p2p", "DoS", "Immunefi"]
 draft: true
@@ -8,7 +8,7 @@ author: "fadam"
 authorLink: ""
 description: "Second-Order DoS in Wormhole p2p"
 images: []
-categories: ["Web2"]
+categories: ["Web2", "p2p"]
 lightgallery: true
 resources:
   - name: "featured-image-preview"
@@ -22,7 +22,7 @@ toc:
 
 ## 1. Introduction
 
-We discovered a vulnerability within the p2p implementation of Wormhole that could allow an external attacker to crash the Guardian network. The attack was non-volumetric, easy to reproduce, but difficult to catch. The difficulty came from the fact it was a *second-order attack*, meaning the hacker attacks the victim, but the exploit would be triggered by the victim itself at a later stage.
+We discovered a vulnerability within the p2p implementation of Wormhole that would have allowed an external attacker to crash the Guardian network. The attack was non-volumetric, easy to reproduce, but difficult to catch. The difficulty came from the fact it was a *second-order attack*, meaning the hacker attacks the victim, but the exploit would be triggered by the victim itself at a later stage.
 
 
 ### Wormhole and Guardians
@@ -41,18 +41,18 @@ Each actor on the p2p network is identified by a **PeerId**, determined by a pri
 Other actors (**Spies**) can join the gossip network, and listen to the messages sent by the Guardians.
 Those messages can be:
 - Verified Action Approvals (VAA)
-- Observation
+- Observations
 - *Heartbeats*
 
 The primary role of the **Spy** is to catch the VAA and send them to **Relayers**, who will perform the interaction on the target chain.
 Below is a schema that summarizes the different actors.
 ![Wormhole p2p](2-p2p.png)
 
-The issues we identified on the gossip p2p network are:
+We identified 2 interesting behaviours of the gossip p2p network:
 - **Lack of access control**: Not only Guardians can send messages. Anyone can send messages on gossip, even Spies, or any rogue client. Those messages will be interpreted by the Guardians.
 - **Lack of anti-replay mechanism**: Anyone can replay *Heartbeats*: Guardians will not check if they have already received a message.
 
-From there, we tried to get a high impact and crash the p2p network.
+From here we tried to use these facts to see if we could crash the p2p network.
 
 ### First attempt: High Cardinality Attack
 
@@ -121,13 +121,12 @@ Or again in the `node/pkg/processor/observation.go` file :
 // We can now count events by Guardian without worry about cardinality explosions:
 ```
 
-We were able to produce a PoC that showed an impact on our side but there were many issues:
+We were able to produce a PoC that we shared with the Wormhole team, but there were many issues:
 - The test environment provided by Wormhole (Tilt) consumes a lot of CPU, making our test inconclusive according to the team,
 - The attack was very slow, meaning it could have needed volume to succeed, which would have made it categorized as a "Volumetric attack", which is out-of-scope,
 - Our PoC was inefficient because it used a modified Spy.
 
-We reported the issue to Wormhole still, hoping they would see the point especially because clear comments in the code are saying "we are trying to protect ourselves" and it is not working. 
-They wanted a better PoC where they could see the Guardians failing at their task (not seeing *Heartbeats* or observations). After discussing, they sent us [this file](https://github.com/wormhole-foundation/wormhole-dashboard/blob/main/fly/cmd/healthcheck/main.go) to monitor this part.
+Due to the above issues, they wanted a better PoC where they could see the Guardians failing at their task (not seeing *Heartbeats* or observations). After discussing, they sent us [this file](https://github.com/wormhole-foundation/wormhole-dashboard/blob/main/fly/cmd/healthcheck/main.go) to monitor this part.
 
 After analysis of this file, we realized that:
 - It was unsure to be suited in our case, because it monitors *Heartbeats* while we mess up *Heartbeats*.
