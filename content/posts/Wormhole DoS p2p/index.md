@@ -1,6 +1,6 @@
 ---
 weight: 1
-title: "Taking down Wormhole's Guardian Network"
+title: "Wormhole's Guardian Network DoS through p2p vulnerability"
 date: 2024-04-16
 tags: ["Wormhole", "p2p", "DoS", "Immunefi"]
 draft: true
