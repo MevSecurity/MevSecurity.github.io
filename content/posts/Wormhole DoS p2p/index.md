@@ -109,7 +109,7 @@ An external attacker can therefore:
 3. Change their *PeerId* by recreating a secret key,
 4. Go back to Step 1
 
-By doing so, this will add metrics and the table will grow in size (+150/200 lines in the metrics for each new *PeerId*) because the new *PeerId* will be associated with all the metrics (different blockchains, versions, etc). Also, because of the p2p infrastructure, the rogue messages will be treated by the 18 Guardians that did not send the message, amplifying the attack. This could lead to a Denial-of-Service.
+By doing so, this will add metrics and the table will grow in size (+150/200 lines in the metrics for each new *PeerId*) because the new *PeerId* will be associated with all the metrics (different blockchains, versions, etc). Also, because of the p2p infrastructure, the rogue messages will be treated by the others Guardians that did not send the message, amplifying the attack. This could theoretically lead to a Denial-of-Service by filling up the disk of guardian nodes.
 
 We can see that cardinality attack is a concern for Wormhole in multiple places through the code, for example `node/pkg/p2p/netmetrics.go`:
 ```golang
@@ -125,6 +125,7 @@ We were able to produce a PoC that we shared with the Wormhole team, but there w
 - The test environment provided by Wormhole (Tilt) consumes a lot of CPU, making our test inconclusive according to the team,
 - The attack was very slow, meaning it could have needed volume to succeed, which would have made it categorized as a "Volumetric attack", which is out-of-scope,
 - Our PoC was inefficient because it used a modified Spy.
+- The Prometheus client library used by the guardian nodes does not store metrics on disk. A restart of a guardian node clears out the metrics.
 
 Due to the above issues, they wanted a better PoC where they could see the Guardians failing at their task (not seeing *Heartbeats* or observations). After discussing, they sent us [this file](https://github.com/wormhole-foundation/wormhole-dashboard/blob/main/fly/cmd/healthcheck/main.go) to monitor this part.
 
