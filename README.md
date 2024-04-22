@@ -1,4 +1,4 @@
-# MEVSEC BLOG
+# MevSec Blog
 
 ## Create a DRAFT post
 
