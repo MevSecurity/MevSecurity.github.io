@@ -5,7 +5,7 @@ date: 2024-04-16
 tags: ["Wormhole", "p2p", "DoS", "Immunefi"]
 draft: true
 author: "fadam"
-authorLink: ""
+authorLink: "https://blog.fadam.xyz/"
 description: "Second-Order DoS in Wormhole p2p"
 images: []
 categories: ["Web2", "p2p"]

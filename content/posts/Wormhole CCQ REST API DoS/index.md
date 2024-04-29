@@ -5,7 +5,7 @@ date: 2023-10-24
 tags: ["Wormhole", "CCQ", "DoS", "immunefi"]
 draft: false
 author: "fadam"
-authorLink: ""
+authorLink: "https://blog.fadam.xyz/"
 description: "Taking down Wormhole's CCQ service through REST API."
 images: []
 categories: ["Web2"]

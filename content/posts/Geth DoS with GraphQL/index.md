@@ -5,7 +5,7 @@ date: 2023-10-15
 tags: ["Geth", "DoS", "GraphQL"]
 draft: false
 author: "fadam"
-authorLink: ""
+authorLink: "https://blog.fadam.xyz/"
 description: "CVE-2023-42319 : Geth - Denial Of Service through the GraphQL endpoint"
 images: []
 categories: ["Web2"]
