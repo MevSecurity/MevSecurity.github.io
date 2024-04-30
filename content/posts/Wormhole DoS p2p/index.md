@@ -3,7 +3,7 @@ weight: 1
 title: "Wormhole's Guardian Network DoS through p2p vulnerability"
 date: 2024-04-16
 tags: ["Wormhole", "p2p", "DoS", "Immunefi"]
-draft: true
+draft: false
 author: "fadam"
 authorLink: "https://blog.fadam.xyz/"
 description: "Second-Order DoS in Wormhole p2p"
